@@ -464,3 +464,50 @@ dialog.drawer::backdrop {
     transform: none;
   }
 }
+
+/* ---------------------------------------------------------------- modern CSS: view transitions and container queries */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: calc(var(--dur-page) * var(--motion-scale) * 1ms);
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}
+
+/* A card sizes its own figures from the space it is given, not from the viewport. */
+.cq {
+  container-type: inline-size;
+}
+
+.cq-figure {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+@container (min-width: 15rem) {
+  .cq-figure {
+    font-size: 2.25rem;
+  }
+}
+
+@container (min-width: 22rem) {
+  .cq-figure {
+    font-size: 2.75rem;
+  }
+}
+
+/* Sections below the first screen are laid out and painted only when they are about to be seen. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
