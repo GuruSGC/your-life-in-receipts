@@ -16,7 +16,7 @@ const make = (over: Partial<Receipt>): Receipt => ({
   theme: 'food',
   amount: 100,
   direction: 'out',
-  tags: ['lunch', 'food'],
+  search: 'lunch food',
   ...over,
 })
 
@@ -28,7 +28,7 @@ const sample: Receipt[] = [
     title: 'The Beatles',
     detail: '45 plays',
     theme: 'music',
-    tags: ['beatles'],
+    search: 'beatles',
     amount: undefined,
     direction: undefined,
     listenMinutes: 120,
