@@ -6,6 +6,13 @@ All notable changes to this project are recorded here, newest first.
 
 ### Added
 
+- Scrapbook: pin receipts, kept in localStorage and validated on read; "Scrapbook only" filter.
+- Surprise me, Play the story, shareable search links, and a chain view of each day.
+- Print stylesheet and a Print the receipt button.
+- Conventional top-level folders (components, hooks, utils, services, context, constants, types, layouts, routes).
+- Stricter TypeScript (exactOptionalPropertyTypes, noImplicitReturns, noImplicitOverride) and lint (strict rule sets, complexity 10).
+- Documentation: data guide, component reference, security policy, code of conduct, templates.
+
 - Submission attempt 1: the complete experience (Receipt, Story, Connections, Rhythms, Explore, Method).
 
 ## [0.1.0] - 2026-09-20

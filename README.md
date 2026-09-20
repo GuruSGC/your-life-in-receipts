@@ -36,7 +36,7 @@ Nothing is invented. Every number is computed from the receipts, every finding l
 | A clear visual representation of the journey  | The journey strip on the home page: every month of listening as a bar, the chapters as bands, and the spans covered by the ledger and the card underneath                                 |
 | Responsive design                             | Verified at nine widths from 320 px to 2560 px on every page, with a bottom navigation on phones                                                                                          |
 
-Also included: a light theme (subtle blue base, green accents) and a dark theme (light lavender highlight), a day drawer with earlier and later day buttons, a keyboard-first interface, and honest handling of missing and duplicated data.
+Also included: a scrapbook (pin any receipt, kept across reloads, filter to the pinned ones), **Surprise me** (opens a random day where the music and the money met), a guided **Play the story** mode, shareable search links, a chain view that reads each day as music and spending steps, a "Print the receipt" button with a print stylesheet, a light theme (subtle blue base, green accents) and a dark theme (light lavender highlight), and honest handling of missing and duplicated data.
 
 ## Screenshots
 
@@ -58,7 +58,7 @@ Also included: a light theme (subtle blue base, green accents) and a dark theme 
 | Styling      | Tailwind CSS 4 with CSS custom properties                                      | Tokens for both themes; container queries, `color-mix()`, `dvh` units, view transitions     |
 | Icons        | Phosphor                                                                       | Tree-shaken, one family                                                                     |
 | Fonts        | Inter Tight (variable) and JetBrains Mono, self-hosted                         | No third-party requests                                                                     |
-| Tests        | Vitest 5, Testing Library, jsdom                                               | 55 tests, 96% line coverage                                                                 |
+| Tests        | Vitest 5, Testing Library, jsdom                                               | 65 tests, 96% line coverage                                                                 |
 | Verification | Playwright, axe-core, Lighthouse                                               | Every requirement is checked in a real browser                                              |
 | Quality      | ESLint 9 (flat config, jsx-a11y, react-hooks, sonarjs), Prettier, EditorConfig | Zero errors and zero warnings                                                               |
 | Hosting      | Vercel                                                                         | Static build with cache and security headers                                                |
@@ -150,7 +150,7 @@ What was found and done:
 
 ## Testing
 
-`npm test` runs 55 tests in Vitest: decoding and validation, the insight engine, search and filtering, formatting, storage, and full-app integration tests that render every page against the real compiled data, step through the story, search, open the drawer and switch theme. Coverage is enforced by thresholds in `vite.config.ts`: currently 96% of lines. Beyond unit tests, `scripts/verify-*.mjs` check the built app in a real browser; see the list below.
+`npm test` runs 65 tests in Vitest: decoding and validation, the insight engine, search and filtering, formatting, storage, and full-app integration tests that render every page against the real compiled data, step through the story, search, open the drawer and switch theme. Coverage is enforced by thresholds in `vite.config.ts`: currently 96% of lines. Beyond unit tests, `scripts/verify-*.mjs` check the built app in a real browser; see the list below.
 
 `scripts/verify-insights.mjs` recomputes the headline numbers from the raw CSV files with separate code and checks that the app agrees: the night share, the most played artist and count, the loudest year, the forward-button year and rate, the spending split and the strongest connection.
 
