@@ -1,7 +1,7 @@
 import { memo, type CSSProperties } from 'react'
 import type { Receipt } from '@/features/data'
-import { formatRupees } from '@/shared/utils/format'
-import { dayOf, formatDay, formatTime } from '@/shared/utils/time'
+import { formatRupees } from '@/utils/format'
+import { dayOf, formatDay, formatTime } from '@/utils/time'
 
 const KIND_LABEL: Record<Receipt['kind'], string> = {
   listen: 'Listening session',

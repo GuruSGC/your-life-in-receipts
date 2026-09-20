@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import type { LifeData } from '@/features/data'
-import { formatDuration, formatNumber } from '@/shared/utils/format'
-import { dayOf, formatDay } from '@/shared/utils/time'
+import { formatDuration, formatNumber } from '@/utils/format'
+import { dayOf, formatDay } from '@/utils/time'
 
 /** The whole dataset as one printed receipt. */
 export function TotalsReceipt({ life }: { life: LifeData }) {

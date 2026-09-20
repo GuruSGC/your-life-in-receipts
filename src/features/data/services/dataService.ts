@@ -1,4 +1,4 @@
-import { DATA_BASE_PATH } from '@/shared/constants'
+import { DATA_BASE_PATH } from '@/constants'
 import type { LifeData } from '../types'
 import { assemble, decodeCard, decodeLedger, decodeMusic } from './decode'
 

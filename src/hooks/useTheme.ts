@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
-import { STORAGE_THEME_KEY } from '@/shared/constants'
-import { readJson, writeJson } from '@/shared/services/storage'
+import { STORAGE_THEME_KEY } from '@/constants'
+import { readJson, writeJson } from '@/services/storage'
 
 export type ThemeChoice = 'light' | 'dark'
 

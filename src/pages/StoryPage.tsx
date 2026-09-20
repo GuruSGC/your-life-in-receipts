@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { ChapterView } from '@/features/story/components/ChapterView'
-import { DataGate } from '@/shared/components/DataGate'
-import { useHashRoute } from '@/shared/hooks/useHashRoute'
+import { DataGate } from '@/components/DataGate'
+import { useHashRoute } from '@/hooks/useHashRoute'
 
 export default function StoryPage() {
   const { params, navigate } = useHashRoute()

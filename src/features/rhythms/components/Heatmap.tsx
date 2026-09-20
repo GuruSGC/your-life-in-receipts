@@ -1,5 +1,5 @@
-import { formatNumber } from '@/shared/utils/format'
-import { formatHour, WEEKDAYS } from '@/shared/utils/time'
+import { formatNumber } from '@/utils/format'
+import { formatHour, WEEKDAYS } from '@/utils/time'
 
 const CELL_W = 26
 const CELL_H = 26

@@ -1,7 +1,7 @@
 import type { LifeData } from '@/features/data'
-import { THEME_LABELS, type Theme } from '@/shared/constants'
-import { formatNumber, formatPercent } from '@/shared/utils/format'
-import { dayOf, formatMonth, monthKey, monthStartMin, nextMonthKey } from '@/shared/utils/time'
+import { THEME_LABELS, type Theme } from '@/constants'
+import { formatNumber, formatPercent } from '@/utils/format'
+import { dayOf, formatMonth, monthKey, monthStartMin, nextMonthKey } from '@/utils/time'
 import { median, sse } from './stats'
 import type { Chapter, DayFacts, MonthRow, Source } from './types'
 

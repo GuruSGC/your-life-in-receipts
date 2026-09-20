@@ -1,6 +1,6 @@
 import type { LifeData } from '@/features/data'
-import type { Theme } from '@/shared/constants'
-import { dayOf } from '@/shared/utils/time'
+import type { Theme } from '@/constants'
+import { dayOf } from '@/utils/time'
 import type { DayFacts, Link } from './types'
 
 const MIN_BOTH_DAYS = 8

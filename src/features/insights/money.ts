@@ -1,7 +1,7 @@
 import type { LifeData, Receipt } from '@/features/data'
-import { THEME_LABELS, type Theme } from '@/shared/constants'
-import { formatNumber, formatPercent, formatRupees } from '@/shared/utils/format'
-import { dayOf, formatDay, hourOf } from '@/shared/utils/time'
+import { THEME_LABELS, type Theme } from '@/constants'
+import { formatNumber, formatPercent, formatRupees } from '@/utils/format'
+import { dayOf, formatDay, hourOf } from '@/utils/time'
 import { pearson, sum } from './stats'
 import type { DayFacts, Insight, Link, MonthRow } from './types'
 

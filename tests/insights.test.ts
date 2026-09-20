@@ -4,7 +4,7 @@ import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/features/data
 import { buildStory } from '@/features/insights'
 import { segmentMonths, pickPersona } from '@/features/insights/chapters'
 import { pearson, quantile, median } from '@/features/insights/stats'
-import { monthsBetween, nextMonthKey, weekdayOf, dayOf } from '@/shared/utils/time'
+import { monthsBetween, nextMonthKey, weekdayOf, dayOf } from '@/utils/time'
 
 const read = (name: string): unknown => JSON.parse(readFileSync(`public/data/${name}.json`, 'utf8'))
 const life = assemble(

@@ -1,8 +1,8 @@
 import type { Link } from '@/features/insights'
-import { THEME_LABELS } from '@/shared/constants'
-import { useDrawer } from '@/shared/context/drawerApi'
-import { formatNumber, formatPercent } from '@/shared/utils/format'
-import { formatDay } from '@/shared/utils/time'
+import { THEME_LABELS } from '@/constants'
+import { useDrawer } from '@/context/drawerApi'
+import { formatNumber, formatPercent } from '@/utils/format'
+import { formatDay } from '@/utils/time'
 
 function RateBar({ label, ratio, strong }: { label: string; ratio: number; strong?: boolean }) {
   return (

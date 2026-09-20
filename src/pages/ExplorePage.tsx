@@ -7,12 +7,12 @@ import {
   summarise,
   type Filters,
 } from '@/features/explore/utils/search'
-import { DataGate } from '@/shared/components/DataGate'
-import { PageTitle } from '@/shared/components/PageTitle'
-import { ReceiptRow } from '@/shared/components/ReceiptRow'
-import { useDrawer } from '@/shared/context/drawerApi'
-import { formatDuration, formatNumber, formatRupees } from '@/shared/utils/format'
-import { dayOf, yearOf } from '@/shared/utils/time'
+import { DataGate } from '@/components/DataGate'
+import { PageTitle } from '@/components/PageTitle'
+import { ReceiptRow } from '@/components/ReceiptRow'
+import { useDrawer } from '@/context/drawerApi'
+import { formatDuration, formatNumber, formatRupees } from '@/utils/format'
+import { dayOf, yearOf } from '@/utils/time'
 import type { LifeData } from '@/features/data'
 
 const PAGE_SIZE = 60

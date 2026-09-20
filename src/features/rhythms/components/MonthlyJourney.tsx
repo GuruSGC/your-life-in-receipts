@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Chapter, MonthRow } from '@/features/insights'
-import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/shared/utils/format'
-import { formatMonth } from '@/shared/utils/time'
+import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/utils/format'
+import { formatMonth } from '@/utils/time'
 
 const WIDTH = 1000
 const HEIGHT = 230

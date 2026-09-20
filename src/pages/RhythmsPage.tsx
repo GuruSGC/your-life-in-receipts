@@ -1,8 +1,8 @@
 import { ArtistStreams } from '@/features/rhythms/components/ArtistStreams'
 import { Heatmap } from '@/features/rhythms/components/Heatmap'
 import { MonthlyJourney } from '@/features/rhythms/components/MonthlyJourney'
-import { DataGate } from '@/shared/components/DataGate'
-import { PageTitle } from '@/shared/components/PageTitle'
+import { DataGate } from '@/components/DataGate'
+import { PageTitle } from '@/components/PageTitle'
 
 export default function RhythmsPage() {
   return (

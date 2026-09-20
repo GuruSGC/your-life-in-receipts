@@ -1,5 +1,5 @@
 import { useRef, type ReactNode } from 'react'
-import { useFocusHeading } from '@/shared/hooks/useFocusHeading'
+import { useFocusHeading } from '@/hooks/useFocusHeading'
 
 /** The page's one h1. After the first render it takes focus so route changes are announced and keyboard users start at the top. */
 export function PageTitle({ children, kicker }: { children: ReactNode; kicker?: string }) {

@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import type { Chapter, MonthRow } from '@/features/insights'
-import { formatDuration, formatRupees } from '@/shared/utils/format'
-import { formatMonth } from '@/shared/utils/time'
+import { formatDuration, formatRupees } from '@/utils/format'
+import { formatMonth } from '@/utils/time'
 
 const WIDTH = 1000
 const HEIGHT = 200

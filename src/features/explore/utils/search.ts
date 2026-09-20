@@ -1,6 +1,6 @@
 import type { Receipt, ReceiptKind } from '@/features/data'
-import type { Theme } from '@/shared/constants'
-import { yearOf } from '@/shared/utils/time'
+import type { Theme } from '@/constants'
+import { yearOf } from '@/utils/time'
 
 export type SortKey = 'newest' | 'oldest' | 'largest' | 'longest'
 

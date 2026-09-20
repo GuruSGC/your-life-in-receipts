@@ -1,6 +1,6 @@
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import type { ReceiptKind } from '@/features/data'
-import { MAX_SEARCH_LENGTH, THEMES, THEME_LABELS } from '@/shared/constants'
+import { MAX_SEARCH_LENGTH, THEMES, THEME_LABELS } from '@/constants'
 import type { Filters, SortKey } from '../utils/search'
 
 const KIND_OPTIONS: { id: ReceiptKind; label: string }[] = [

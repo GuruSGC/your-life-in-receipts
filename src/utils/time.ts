@@ -1,4 +1,4 @@
-import { MINUTES_PER_DAY } from '@/shared/constants'
+import { MINUTES_PER_DAY } from '@/constants'
 
 const DAY_MS = 86_400_000
 

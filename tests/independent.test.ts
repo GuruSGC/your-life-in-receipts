@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/features/data'
 import { buildStory } from '@/features/insights'
-import { LEDGER_THEME } from '@/shared/constants'
+import { LEDGER_THEME } from '@/constants'
 
 // Expected values come from scripts/verify-insights.mjs, which recomputes them from the raw CSV files.
 const expectedFile = '.verify/expected.json'

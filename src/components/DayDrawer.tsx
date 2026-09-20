@@ -1,10 +1,10 @@
 import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import type { LifeData, Receipt } from '@/features/data'
-import { useReady } from '@/shared/context/dataApi'
-import { useDrawer, type DrawerTarget } from '@/shared/context/drawerApi'
-import { formatDuration, formatNumber, formatRupees, plural } from '@/shared/utils/format'
-import { formatDay, formatWeekday } from '@/shared/utils/time'
+import { useReady } from '@/context/dataApi'
+import { useDrawer, type DrawerTarget } from '@/context/drawerApi'
+import { formatDuration, formatNumber, formatRupees, plural } from '@/utils/format'
+import { formatDay, formatWeekday } from '@/utils/time'
 import { ReceiptRow } from './ReceiptRow'
 
 const SEARCH_LIMIT_DAYS = 400

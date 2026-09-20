@@ -1,5 +1,5 @@
 import type { LifeData } from '@/features/data'
-import { dayOf, monthKey, monthsBetween, monthStartMin } from '@/shared/utils/time'
+import { dayOf, monthKey, monthsBetween, monthStartMin } from '@/utils/time'
 import type { DayFacts, MonthRow } from './types'
 
 const emptyMonth = (key: string): MonthRow => ({

@@ -3,9 +3,9 @@ import { ArcDiagram } from '@/features/connections/components/ArcDiagram'
 import { LinkDetail } from '@/features/connections/components/LinkDetail'
 import { linkKey } from '@/features/connections/utils/linkKey'
 import type { Link } from '@/features/insights'
-import { DataGate } from '@/shared/components/DataGate'
-import { PageTitle } from '@/shared/components/PageTitle'
-import { THEME_LABELS } from '@/shared/constants'
+import { DataGate } from '@/components/DataGate'
+import { PageTitle } from '@/components/PageTitle'
+import { THEME_LABELS } from '@/constants'
 
 const WINDOWS = [
   { id: 'diary', label: 'Diary years, 2015 to 2018' },

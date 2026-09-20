@@ -30,7 +30,7 @@ npm run build
 ## Conventions
 
 - One component per file, logic in hooks and pure functions.
-- Only `shared/services/storage.ts` touches `localStorage`.
+- Only `services/storage.ts` touches `localStorage`.
 - Import through the `@/` alias, and through a folder's `index.ts` where one exists.
 - Motion may use `transform` and `opacity` only, must be 300 ms or shorter, and must respect `prefers-reduced-motion`.
 - New insights must list the days they were found on, and a test must recompute the number independently.

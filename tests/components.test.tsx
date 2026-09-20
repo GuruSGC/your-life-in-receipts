@@ -12,10 +12,10 @@ import { Heatmap } from '@/features/rhythms/components/Heatmap'
 import { ChapterBars } from '@/features/story/components/ChapterBars'
 import { InsightCard } from '@/features/story/components/InsightCard'
 import { JourneyStrip } from '@/features/story/components/JourneyStrip'
-import { AppHeader } from '@/shared/components/AppHeader'
-import { ReceiptRow } from '@/shared/components/ReceiptRow'
-import { ThemeToggle } from '@/shared/components/ThemeToggle'
-import { DrawerProvider } from '@/shared/context/DrawerContext'
+import { AppHeader } from '@/components/AppHeader'
+import { ReceiptRow } from '@/components/ReceiptRow'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { DrawerProvider } from '@/context/DrawerContext'
 
 const receipt = (over: Partial<Receipt> = {}): Receipt => ({
   id: 'h-1',

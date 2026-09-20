@@ -1,5 +1,5 @@
 import type { Link } from '@/features/insights'
-import { THEME_LABELS } from '@/shared/constants'
+import { THEME_LABELS } from '@/constants'
 import { linkKey } from '../utils/linkKey'
 
 const WIDTH = 900

@@ -1,6 +1,6 @@
 import type { LifeData, Receipt } from '@/features/data'
-import { formatNumber, formatPercent } from '@/shared/utils/format'
-import { dayOf, formatHour, formatDay, yearOf } from '@/shared/utils/time'
+import { formatNumber, formatPercent } from '@/utils/format'
+import { dayOf, formatHour, formatDay, yearOf } from '@/utils/time'
 import { sum } from './stats'
 import type { DayFacts, Insight, MonthRow } from './types'
 

@@ -25,7 +25,7 @@ for (const [file, content] of text) {
     problems.push(`${file} opens a new tab without rel=noopener`)
   if (
     /localStorage|sessionStorage/.test(content) &&
-    !file.replaceAll('\\', '/').endsWith('shared/services/storage.ts')
+    !file.replaceAll('\\', '/').endsWith('services/storage.ts')
   )
     problems.push(`${file} touches web storage outside the storage service`)
   if (

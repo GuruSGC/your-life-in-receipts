@@ -1,4 +1,4 @@
-import { CARD_THEME, LEDGER_THEME, MINUTES_PER_DAY, type Theme } from '@/shared/constants'
+import { CARD_THEME, LEDGER_THEME, MINUTES_PER_DAY, type Theme } from '@/constants'
 import type { LifeData, MusicAggregates, Receipt, SourceQuality } from '../types'
 import { isNumberArray, isStringArray, need, recordOf, rowsOf } from '../utils/guards'
 

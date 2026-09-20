@@ -1,6 +1,6 @@
-import { DataGate } from '@/shared/components/DataGate'
-import { PageTitle } from '@/shared/components/PageTitle'
-import { formatNumber } from '@/shared/utils/format'
+import { DataGate } from '@/components/DataGate'
+import { PageTitle } from '@/components/PageTitle'
+import { formatNumber } from '@/utils/format'
 
 const STEPS = [
   {

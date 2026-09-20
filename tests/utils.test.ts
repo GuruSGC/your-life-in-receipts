@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { parseHash } from '@/shared/hooks/useHashRoute'
-import { readJson, writeJson } from '@/shared/services/storage'
+import { parseHash } from '@/hooks/useHashRoute'
+import { readJson, writeJson } from '@/services/storage'
 import {
   formatCompact,
   formatDuration,
@@ -8,7 +8,7 @@ import {
   formatPercent,
   formatRupees,
   plural,
-} from '@/shared/utils/format'
+} from '@/utils/format'
 import {
   formatDay,
   formatHour,
@@ -19,7 +19,7 @@ import {
   monthKey,
   monthStartMin,
   yearOf,
-} from '@/shared/utils/time'
+} from '@/utils/time'
 import {
   isNumberArray,
   isRecord,

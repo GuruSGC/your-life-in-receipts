@@ -87,7 +87,7 @@ check(
 )
 
 // ---- every category in the raw data is mapped to a theme, or reported
-const constants = readFileSync(new URL('../src/shared/constants/index.ts', import.meta.url), 'utf8')
+const constants = readFileSync(new URL('../src/constants/index.ts', import.meta.url), 'utf8')
 const mapped = (block, key) =>
   new RegExp(`(^|\\n)\\s*['"]?${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]?:`).test(block)
 const ledgerBlock = constants.slice(
