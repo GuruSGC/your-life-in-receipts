@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { Insight } from '@/features/insights'
-import { useDrawer } from '@/shared/context/DrawerContext'
+import { useDrawer } from '@/shared/context/drawerApi'
 import { formatDay } from '@/shared/utils/time'
 
 const GROUP_LABEL: Record<Insight['group'], string> = {

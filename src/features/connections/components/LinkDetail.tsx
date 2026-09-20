@@ -1,6 +1,6 @@
 import type { Link } from '@/features/insights'
 import { THEME_LABELS } from '@/shared/constants'
-import { useDrawer } from '@/shared/context/DrawerContext'
+import { useDrawer } from '@/shared/context/drawerApi'
 import { formatNumber, formatPercent } from '@/shared/utils/format'
 import { formatDay } from '@/shared/utils/time'
 

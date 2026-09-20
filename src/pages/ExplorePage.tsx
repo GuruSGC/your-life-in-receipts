@@ -10,7 +10,7 @@ import {
 import { DataGate } from '@/shared/components/DataGate'
 import { PageTitle } from '@/shared/components/PageTitle'
 import { ReceiptRow } from '@/shared/components/ReceiptRow'
-import { useDrawer } from '@/shared/context/DrawerContext'
+import { useDrawer } from '@/shared/context/drawerApi'
 import { formatDuration, formatNumber, formatRupees } from '@/shared/utils/format'
 import { dayOf, yearOf } from '@/shared/utils/time'
 import type { LifeData } from '@/features/data'

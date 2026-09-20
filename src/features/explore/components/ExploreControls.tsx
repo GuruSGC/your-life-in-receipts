@@ -3,13 +3,13 @@ import type { ReceiptKind } from '@/features/data'
 import { MAX_SEARCH_LENGTH, THEMES, THEME_LABELS } from '@/shared/constants'
 import type { Filters, SortKey } from '../utils/search'
 
-const KIND_OPTIONS: Array<{ id: ReceiptKind; label: string }> = [
+const KIND_OPTIONS: { id: ReceiptKind; label: string }[] = [
   { id: 'listen', label: 'Music' },
   { id: 'ledger', label: 'Household ledger' },
   { id: 'card', label: 'Card statement' },
 ]
 
-const SORTS: Array<{ id: SortKey; label: string }> = [
+const SORTS: { id: SortKey; label: string }[] = [
   { id: 'newest', label: 'Newest first' },
   { id: 'oldest', label: 'Oldest first' },
   { id: 'largest', label: 'Largest amount' },

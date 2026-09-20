@@ -5,7 +5,7 @@ import { dayOf, formatDay } from '@/shared/utils/time'
 
 /** The whole dataset as one printed receipt. */
 export function TotalsReceipt({ life }: { life: LifeData }) {
-  const lines: Array<[string, string]> = [
+  const lines: [string, string][] = [
     ['First receipt', formatDay(dayOf(life.range.startMin))],
     ['Last receipt', formatDay(dayOf(life.range.endMin))],
     ['Songs played', formatNumber(life.totals.plays)],

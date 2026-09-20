@@ -31,10 +31,10 @@ export interface MusicAggregates {
   playsByYear: Record<string, number>
   skipsByYear: Record<string, number>
   minutesByMonth: Record<string, number>
-  topArtists: Array<{ name: string; plays: number }>
-  artistYear: Array<{ name: string; year: number; plays: number }>
+  topArtists: { name: string; plays: number }[]
+  artistYear: { name: string; year: number; plays: number }[]
   newArtistsByYear: Record<string, number>
-  comfort: Array<{ track: string; artist: string; plays: number; years: number[] }>
+  comfort: { track: string; artist: string; plays: number; years: number[] }[]
 }
 
 export interface SourceQuality {

@@ -96,7 +96,7 @@ const relative = (value: number, base: number): number => (base ? value / base -
  * `avoid` keeps neighbouring chapters from sharing a name.
  */
 export function pickPersona(t: Traits, base: Traits, lead: string, avoid = ''): string {
-  const candidates: Array<[string, number]> = [
+  const candidates: [string, number][] = [
     ['The Quiet Stretch', (0.5 - t.level) / 0.2],
     ['The Explorer', relative(t.newLeadRate, base.newLeadRate) / 0.5],
     [`The ${lead.replace(/^The /, '')} Loyalist`, (t.leadShare - base.leadShare) / 0.05],

@@ -12,7 +12,7 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.recommended,
+      ...tseslint.configs.strict, ...tseslint.configs.stylistic,
       jsxA11y.flatConfigs.recommended,
       sonarjs.configs.recommended,
     ],
