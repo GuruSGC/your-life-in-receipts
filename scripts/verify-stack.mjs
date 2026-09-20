@@ -92,7 +92,11 @@ const features = [
   ],
   ['CSS custom properties driving the theme', /:root\[data-theme='dark'\]/.test(css)],
   ['web app manifest', /rel="manifest"/.test(html) && existsSync('public/manifest.webmanifest')],
-  ['self-hosted variable font', /fontsource-variable/.test(css)],
+  [
+    'self-hosted variable font',
+    /font-weight: 100 900/.test(css) &&
+      existsSync('public/fonts/inter-tight-latin-wght-normal.woff2'),
+  ],
   ['ESM imports with a path alias', /from '@\//.test(code)],
 ]
 for (const [name, present] of features) check(present, `missing modern feature: ${name}`)
