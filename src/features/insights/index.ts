@@ -19,7 +19,7 @@ import {
 import { dayFacts, monthlySeries } from './series'
 import type { Chapter, DayFacts, Insight, Link, MonthRow } from './types'
 
-export interface Story {
+export interface StoryWithFacts {
   months: MonthRow[]
   facts: Map<number, DayFacts>
   chapters: Chapter[]
@@ -27,8 +27,21 @@ export interface Story {
   links: Link[]
 }
 
+/** What the interface needs. The per-day working set stays behind in the worker. */
+export type Story = Omit<StoryWithFacts, 'facts'>
+
+/** Drops the per-day working set before the story is sent to the interface. */
+export function forInterface(full: StoryWithFacts): Story {
+  return {
+    months: full.months,
+    chapters: full.chapters,
+    insights: full.insights,
+    links: full.links,
+  }
+}
+
 /** Runs the whole insight pipeline once over the decoded data. Pure and deterministic. */
-export function buildStory(life: LifeData): Story {
+export function buildStory(life: LifeData): StoryWithFacts {
   const months = monthlySeries(life)
   const facts = dayFacts(life)
   const chapters = buildChapters(life, months, facts)

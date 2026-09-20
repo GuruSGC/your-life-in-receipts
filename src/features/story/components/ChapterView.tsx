@@ -1,8 +1,9 @@
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react'
-import { useEffect, useRef, type CSSProperties } from 'react'
-import type { LifeData } from '@/features/data'
+import { useRef, type CSSProperties } from 'react'
+import type { LifeData, Receipt } from '@/features/data'
 import type { Chapter, Insight, Story } from '@/features/insights'
 import { THEME_LABELS } from '@/shared/constants'
+import { useFocusHeading } from '@/shared/hooks/useFocusHeading'
 import { useDrawer } from '@/shared/context/DrawerContext'
 import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/shared/utils/format'
 import { dayOf, formatDay } from '@/shared/utils/time'
@@ -25,6 +26,42 @@ function insightsFor(story: Story, chapter: Chapter): Insight[] {
   })
 }
 
+function MomentBody(props: {
+  complete: boolean
+  day: number | null
+  receipts: Receipt[] | null
+  onOpen: (day: number) => void
+}) {
+  const { complete, day, receipts, onOpen } = props
+  if (!complete) {
+    return (
+      <p role="status" className="mono mt-2 text-sm text-ink-2">
+        Loading the receipts…
+      </p>
+    )
+  }
+  if (!receipts || day === null) {
+    return (
+      <p className="mt-2 max-w-xl text-ink-2">
+        No day in this chapter carries receipts from more than one source, so there is nothing to
+        lay side by side. The listening stands alone.
+      </p>
+    )
+  }
+  return (
+    <div className="ticket mt-3 max-w-xl p-5">
+      <p className="mono text-xs uppercase tracking-[0.14em] text-accent">{formatDay(day)}</p>
+      <p className="mt-2 text-ink-2">
+        The richest day in this chapter: {formatNumber(receipts.length)} receipts from{' '}
+        {new Set(receipts.map((r) => r.kind)).size} different sources.
+      </p>
+      <button type="button" className="btn btn-primary mt-4" onClick={() => onOpen(day)}>
+        Open that day
+      </button>
+    </div>
+  )
+}
+
 function Stat({ label, value, index }: { label: string; value: string; index: number }) {
   return (
     <div className="paper enter p-4" style={{ '--i': index } as CSSProperties}>
@@ -37,16 +74,12 @@ function Stat({ label, value, index }: { label: string; value: string; index: nu
 export function ChapterView({ life, story, chapter, onStep }: Props) {
   const { openDay } = useDrawer()
   const heading = useRef<HTMLHeadingElement>(null)
-  const mounted = useRef(false)
   const total = story.chapters.length
   const found = insightsFor(story, chapter)
   const stats = chapter.stats
   const moment = chapter.momentDay === null ? null : (life.byDay.get(chapter.momentDay) ?? null)
 
-  useEffect(() => {
-    if (mounted.current) heading.current?.focus({ preventScroll: true })
-    mounted.current = true
-  }, [chapter.id])
+  useFocusHeading(heading, chapter.id)
 
   return (
     <article key={chapter.id} aria-labelledby="chapter-title">
@@ -108,29 +141,12 @@ export function ChapterView({ life, story, chapter, onStep }: Props) {
         <h2 id="day-title" className="text-xl">
           A day that shows it
         </h2>
-        {moment && chapter.momentDay !== null ? (
-          <div className="ticket mt-3 max-w-xl p-5">
-            <p className="mono text-xs uppercase tracking-[0.14em] text-accent">
-              {formatDay(chapter.momentDay)}
-            </p>
-            <p className="mt-2 text-ink-2">
-              The richest day in this chapter: {formatNumber(moment.length)} receipts from{' '}
-              {new Set(moment.map((r) => r.kind)).size} different sources.
-            </p>
-            <button
-              type="button"
-              className="btn btn-primary mt-4"
-              onClick={() => openDay(chapter.momentDay ?? 0)}
-            >
-              Open that day
-            </button>
-          </div>
-        ) : (
-          <p className="mt-2 max-w-xl text-ink-2">
-            No day in this chapter carries receipts from more than one source, so there is nothing
-            to lay side by side. The listening stands alone.
-          </p>
-        )}
+        <MomentBody
+          complete={life.complete}
+          day={chapter.momentDay}
+          receipts={moment}
+          onOpen={openDay}
+        />
       </section>
 
       {found.length > 0 ? (

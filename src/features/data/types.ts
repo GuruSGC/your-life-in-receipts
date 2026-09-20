@@ -14,7 +14,7 @@ export interface Receipt {
   amount?: number
   direction?: 'out' | 'in' | 'transfer'
   /** Lower-case words used by search and by the link finder. */
-  tags: string[]
+  search: string
   artists?: string[]
   place?: string
   flagged?: boolean
@@ -44,7 +44,9 @@ export interface SourceQuality {
   notes: string[]
 }
 
+/** The receipts arrive after the first paint, in pieces, so `complete` says whether they are all here yet. */
 export interface LifeData {
+  complete: boolean
   receipts: Receipt[]
   byDay: Map<number, Receipt[]>
   music: MusicAggregates
@@ -54,6 +56,9 @@ export interface LifeData {
     listenedMinutes: number
     sessions: number
     spendReceipts: number
+    ledgerReceipts: number
+    cardReceipts: number
+    undated: number
     artists: number
   }
   range: { startMin: number; endMin: number }

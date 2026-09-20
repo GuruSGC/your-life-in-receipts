@@ -5,8 +5,6 @@ import { dayOf, formatDay } from '@/shared/utils/time'
 
 /** The whole dataset as one printed receipt. */
 export function TotalsReceipt({ life }: { life: LifeData }) {
-  const drawer = life.receipts.filter((receipt) => receipt.min === null).length
-  const spendKinds = life.receipts.filter((receipt) => receipt.kind !== 'listen')
   const lines: Array<[string, string]> = [
     ['First receipt', formatDay(dayOf(life.range.startMin))],
     ['Last receipt', formatDay(dayOf(life.range.endMin))],
@@ -14,9 +12,9 @@ export function TotalsReceipt({ life }: { life: LifeData }) {
     ['Time listening', formatDuration(life.totals.listenedMinutes)],
     ['Different artists', formatNumber(life.totals.artists)],
     ['Listening sessions', formatNumber(life.totals.sessions)],
-    ['Household entries', formatNumber(life.receipts.filter((r) => r.kind === 'ledger').length)],
-    ['Card receipts', formatNumber(life.receipts.filter((r) => r.kind === 'card').length)],
-    ['In the drawer, no date', formatNumber(drawer)],
+    ['Household entries', formatNumber(life.totals.ledgerReceipts)],
+    ['Card receipts', formatNumber(life.totals.cardReceipts)],
+    ['In the drawer, no date', formatNumber(life.totals.undated)],
   ]
   return (
     <section className="ticket p-5 md:p-6" aria-labelledby="totals-title">
@@ -35,7 +33,9 @@ export function TotalsReceipt({ life }: { life: LifeData }) {
       <div className="mt-4 border-t-2 border-dashed border-line-strong pt-3">
         <p className="leader font-semibold">
           <span>Receipts in total</span>
-          <span className="mono">{formatNumber(life.totals.sessions + spendKinds.length)}</span>
+          <span className="mono">
+            {formatNumber(life.totals.sessions + life.totals.spendReceipts)}
+          </span>
         </p>
       </div>
     </section>

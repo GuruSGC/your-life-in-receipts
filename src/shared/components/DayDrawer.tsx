@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import type { LifeData, Receipt } from '@/features/data'
 import { useReady } from '@/shared/context/DataContext'
-import { useDrawer } from '@/shared/context/DrawerContext'
+import { useDrawer, type DrawerTarget } from '@/shared/context/DrawerContext'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/shared/utils/format'
 import { formatDay, formatWeekday } from '@/shared/utils/time'
 import { ReceiptRow } from './ReceiptRow'
@@ -89,6 +89,38 @@ function DayContent({
   )
 }
 
+function DrawerBody(props: {
+  target: NonNullable<DrawerTarget>
+  life: LifeData
+  onDay: (day: number) => void
+}) {
+  const { target, life, onDay } = props
+  if (target.kind === 'receipt') {
+    return (
+      <>
+        <h2 id="drawer-title" className="text-2xl">
+          A receipt with no date
+        </h2>
+        <p className="mt-2 text-ink-2">
+          The source left the date blank, so this receipt cannot be placed on a day or joined to the
+          music. It stays in the drawer.
+        </p>
+        <ul className="mt-4">
+          <ReceiptRow receipt={target.receipt} />
+        </ul>
+      </>
+    )
+  }
+  if (!life.complete) {
+    return (
+      <p role="status" className="mono text-sm text-ink-2">
+        Loading the receipts…
+      </p>
+    )
+  }
+  return <DayContent life={life} day={target.day} onDay={onDay} />
+}
+
 /** A modal sheet showing everything recorded on one day, or a single undated receipt. */
 export function DayDrawer() {
   const { target, close, openDay } = useDrawer()
@@ -124,22 +156,7 @@ export function DayDrawer() {
           >
             <X size={20} weight="bold" aria-hidden={true} />
           </button>
-          {target.kind === 'day' ? (
-            <DayContent life={ready.life} day={target.day} onDay={openDay} />
-          ) : (
-            <>
-              <h2 id="drawer-title" className="text-2xl">
-                A receipt with no date
-              </h2>
-              <p className="mt-2 text-ink-2">
-                The source left the date blank, so this receipt cannot be placed on a day or joined
-                to the music. It stays in the drawer.
-              </p>
-              <ul className="mt-4">
-                <ReceiptRow receipt={target.receipt} />
-              </ul>
-            </>
-          )}
+          <DrawerBody target={target} life={ready.life} onDay={openDay} />
         </div>
       ) : null}
     </dialog>

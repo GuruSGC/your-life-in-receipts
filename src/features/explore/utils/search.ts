@@ -25,7 +25,7 @@ export const DEFAULT_FILTERS: Filters = {
 }
 
 const haystack = (receipt: Receipt): string =>
-  `${receipt.title} ${receipt.detail} ${receipt.tags.join(' ')}`.toLowerCase()
+  `${receipt.title} ${receipt.detail} ${receipt.search}`.toLowerCase()
 
 /** Every whitespace-separated term must appear somewhere in the receipt's text. */
 export function matchesQuery(receipt: Receipt, query: string): boolean {

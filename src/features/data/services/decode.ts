@@ -10,15 +10,16 @@ const num = (value: unknown, what: string): number => {
 const str = (value: unknown): string => (typeof value === 'string' ? value : '')
 const at = (list: string[], index: unknown): string =>
   typeof index === 'number' && index >= 0 ? (list[index] ?? '') : ''
-const words = (...parts: string[]): string[] => [
-  ...new Set(
-    parts
-      .join(' ')
-      .toLowerCase()
-      .split(/[^a-z0-9₹]+/)
-      .filter((word) => word.length > 1),
-  ),
-]
+const words = (...parts: string[]): string =>
+  [
+    ...new Set(
+      parts
+        .join(' ')
+        .toLowerCase()
+        .split(/[^a-z0-9₹]+/)
+        .filter((word) => word.length > 1),
+    ),
+  ].join(' ')
 
 export interface Decoded {
   receipts: Receipt[]
@@ -51,7 +52,7 @@ export function decodeMusic(raw: unknown): Decoded {
       title: `${names[0] ?? 'Unknown artist'}${more}`,
       detail: `${plays} plays, ${listenMinutes} min${lead ? `, led by "${lead}"` : ''}`,
       theme: 'music',
-      tags: words(...names, lead),
+      search: words(...names, lead),
       artists: names,
       listenMinutes,
       plays,
@@ -151,7 +152,7 @@ export function decodeLedger(raw: unknown): Decoded {
       theme: ledgerTheme(category, sub),
       amount: num(row[1], 'ledger amount'),
       direction: DIRECTIONS[kind] ?? 'out',
-      tags: words(category, sub, note, mode),
+      search: words(category, sub, note, mode),
     }
   })
   return {
@@ -195,7 +196,7 @@ export function decodeCard(raw: unknown): Decoded {
       theme: CARD_THEME[category] ?? 'other',
       amount: num(row[1], 'card amount'),
       direction: 'out',
-      tags: words(merchant, category.replace(/_/g, ' '), city, state),
+      search: words(merchant, category.replace(/_/g, ' '), city, state),
       place: place || undefined,
       flagged: row[6] === 1,
     }
@@ -225,11 +226,7 @@ export function decodeCard(raw: unknown): Decoded {
   }
 }
 
-export function assemble(music: Decoded, ledger: Decoded, card: Decoded): LifeData {
-  if (!music.music) throw new Error('Music aggregates are missing')
-  const receipts = [...music.receipts, ...ledger.receipts, ...card.receipts].sort(
-    (a, b) => (a.min ?? Number.MAX_SAFE_INTEGER) - (b.min ?? Number.MAX_SAFE_INTEGER),
-  )
+export function indexByDay(receipts: Receipt[]): Map<number, Receipt[]> {
   const byDay = new Map<number, Receipt[]>()
   for (const receipt of receipts) {
     if (receipt.min === null) continue
@@ -238,9 +235,28 @@ export function assemble(music: Decoded, ledger: Decoded, card: Decoded): LifeDa
     if (list) list.push(receipt)
     else byDay.set(day, [receipt])
   }
+  return byDay
+}
+
+/** The same life without its receipts, for the first paint. */
+export function withoutReceipts(life: LifeData): LifeData {
+  return { ...life, complete: false, receipts: [], byDay: new Map() }
+}
+
+/** Fills in the receipts once they have all arrived. */
+export function withReceipts(life: LifeData, receipts: Receipt[]): LifeData {
+  return { ...life, complete: true, receipts, byDay: indexByDay(receipts) }
+}
+
+export function assemble(music: Decoded, ledger: Decoded, card: Decoded): LifeData {
+  if (!music.music) throw new Error('Music aggregates are missing')
+  const receipts = [...music.receipts, ...ledger.receipts, ...card.receipts].sort(
+    (a, b) => (a.min ?? Number.MAX_SAFE_INTEGER) - (b.min ?? Number.MAX_SAFE_INTEGER),
+  )
   return {
+    complete: true,
     receipts,
-    byDay,
+    byDay: indexByDay(receipts),
     music: music.music,
     quality: [music.quality, ledger.quality, card.quality],
     totals: {
@@ -248,6 +264,9 @@ export function assemble(music: Decoded, ledger: Decoded, card: Decoded): LifeDa
       listenedMinutes: music.extra.listenedMinutes ?? 0,
       sessions: music.receipts.length,
       spendReceipts: ledger.receipts.length + card.receipts.length,
+      ledgerReceipts: ledger.receipts.length,
+      cardReceipts: card.receipts.length,
+      undated: receipts.filter((receipt) => receipt.min === null).length,
       artists: music.extra.artists ?? 0,
     },
     range: {

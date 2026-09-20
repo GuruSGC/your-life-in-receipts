@@ -105,7 +105,13 @@ export default function ExplorePage() {
             Search across the music, the household ledger and the card statement together. Open any
             receipt to see the rest of that day.
           </p>
-          <Results life={life} />
+          {life.complete ? (
+            <Results life={life} />
+          ) : (
+            <p role="status" className="mono text-sm text-ink-2">
+              Loading the receipts…
+            </p>
+          )}
         </>
       )}
     </DataGate>

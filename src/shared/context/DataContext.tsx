@@ -7,8 +7,10 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { loadLifeData, type LifeData } from '@/features/data'
-import { buildStory, type Story } from '@/features/insights'
+import { withReceipts } from '@/features/data/services/decode'
+import { loadStory } from '@/features/data/services/loadStory'
+import type { LifeData, Receipt } from '@/features/data'
+import type { Story } from '@/features/insights'
 
 type State =
   | { status: 'loading' }
@@ -28,10 +30,21 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false
-    loadLifeData()
-      .then((life) => {
+    // The decoder and the insight engine run in a worker so the first paint and every interaction stay smooth.
+    let early: Receipt[] | null = null
+    loadStory((receipts) => {
+      if (cancelled) return
+      early = receipts
+      setState((current) =>
+        current.status === 'ready'
+          ? { ...current, life: withReceipts(current.life, receipts) }
+          : current,
+      )
+    })
+      .then(({ life, story }) => {
         if (cancelled) return
-        setState({ status: 'ready', life, story: buildStory(life) })
+        // The receipts can beat the story to the page when the work runs on the main thread.
+        setState({ status: 'ready', life: early ? withReceipts(life, early) : life, story })
       })
       .catch((error: unknown) => {
         if (cancelled) return
