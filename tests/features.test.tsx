@@ -38,6 +38,8 @@ describe('the scrapbook', () => {
     const first = render(<App />)
     await screen.findByText(/12,611 receipts/)
     await userEvent.type(screen.getByRole('searchbox'), 'kirana')
+    // The search is deferred: wait until the list has really narrowed before pinning from it.
+    await waitFor(() => expect(screen.queryByText(/12,611 receipts/)).not.toBeInTheDocument())
     const pins = await screen.findAllByRole('button', { name: /pin to the scrapbook/i })
     await userEvent.click(pins[0] as HTMLElement)
     await userEvent.click(pins[1] as HTMLElement)
