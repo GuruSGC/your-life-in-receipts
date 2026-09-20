@@ -12,7 +12,8 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.strict, ...tseslint.configs.stylistic,
+      ...tseslint.configs.strict,
+      ...tseslint.configs.stylistic,
       jsxA11y.flatConfigs.recommended,
       sonarjs.configs.recommended,
     ],
@@ -24,7 +25,10 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'error',
       'no-console': ['error', { allow: ['error', 'warn'] }],
       complexity: ['error', 10],
-      'max-lines-per-function': ['error', { max: 150, skipBlankLines: true, skipComments: true, IIFEs: true }],
+      'max-lines-per-function': [
+        'error',
+        { max: 150, skipBlankLines: true, skipComments: true, IIFEs: true },
+      ],
       'max-params': ['error', 5],
       'max-depth': ['error', 3],
       'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
