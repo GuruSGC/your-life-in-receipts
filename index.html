@@ -10,10 +10,52 @@
     <meta name="theme-color" content="#eef4fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#14121c" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <title>Your Life, In Receipts</title>
+    <style>
+      /* The first paint: this shell is replaced by the app as soon as it mounts, at the same size. */
+      body {
+        margin: 0;
+        background: #eef4fb;
+        color: #13202f;
+        font-family: system-ui, sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #14121c;
+          color: #eeebf9;
+        }
+      }
+      .boot-bar {
+        height: 65px;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgb(128 128 128/0.3);
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        font-weight: 600;
+      }
+      .boot-body {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 24px 16px;
+      }
+      .boot-title {
+        font-size: clamp(1.9rem, 1.2rem + 3vw, 3.25rem);
+        font-weight: 650;
+        letter-spacing: -0.02em;
+        line-height: 1.12;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div aria-hidden="true">
+        <div class="boot-bar">Your Life, In Receipts</div>
+        <div class="boot-body"><p class="boot-title">A whole life, told in receipts</p></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

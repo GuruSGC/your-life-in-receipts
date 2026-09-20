@@ -1,0 +1,10 @@
+{
+  "name": "Your Life, In Receipts",
+  "short_name": "Receipts",
+  "description": "An interactive story built from the small moments of a digital life.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef4fb",
+  "theme_color": "#157a50",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

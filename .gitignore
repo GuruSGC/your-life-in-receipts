@@ -6,3 +6,7 @@ coverage
 .vercel
 *.log
 .DS_Store
+
+# verification output
+.screens
+.verify

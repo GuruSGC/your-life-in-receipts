@@ -19,13 +19,11 @@ export function InsightCard({ insight, index = 0 }: { insight: Insight; index?: 
   const { openDay } = useDrawer()
   const style = { '--i': index } as CSSProperties
   return (
-    <article className="paper enter flex flex-col p-5" style={style}>
+    <article className="paper enter cq flex flex-col p-5" style={style}>
       <p className="mono text-xs uppercase tracking-[0.14em] text-accent">
         {GROUP_LABEL[insight.group]}
       </p>
-      <p className="num mt-2 text-[clamp(2rem,1.4rem+2vw,2.75rem)] font-bold leading-none tracking-tight">
-        {insight.stat}
-      </p>
+      <p className="num cq-figure mt-2 font-bold tracking-tight">{insight.stat}</p>
       <p className="mt-1 text-sm text-ink-2">{insight.statLabel}</p>
       <h3 className="mt-4 text-lg">{insight.headline}</h3>
       <p className="mt-2 text-[0.95rem] text-ink-2">{insight.body}</p>

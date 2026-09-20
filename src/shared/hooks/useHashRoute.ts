@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react'
+import { flushSync } from 'react-dom'
 
 export const ROUTES = [
   { id: 'receipt', path: '/', label: 'Receipt' },
@@ -23,9 +24,23 @@ export function parseHash(hash: string): ParsedHash {
   return { route: match?.id ?? 'receipt', params: new URLSearchParams(query) }
 }
 
+/**
+ * Route changes cross-fade with the View Transitions API where the browser has it and the reader has not asked
+ * for reduced motion. Elsewhere the page simply changes.
+ */
 function subscribe(callback: () => void): () => void {
-  window.addEventListener('hashchange', callback)
-  return () => window.removeEventListener('hashchange', callback)
+  const onChange = (): void => {
+    const start = document.startViewTransition?.bind(document)
+    if (!start || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      callback()
+      return
+    }
+    start(() => {
+      flushSync(callback)
+    })
+  }
+  window.addEventListener('hashchange', onChange)
+  return () => window.removeEventListener('hashchange', onChange)
 }
 
 const snapshot = (): string => window.location.hash
