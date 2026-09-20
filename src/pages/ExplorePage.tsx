@@ -48,6 +48,7 @@ function Results({ life }: { life: LifeData }) {
     setFilters(next)
     setShown(PAGE_SIZE)
   }, [])
+  const showMore = useCallback(() => setShown((count) => count + PAGE_SIZE), [])
   const reset = useCallback(() => change(DEFAULT_FILTERS), [change])
   const open = useCallback(
     (receipt: Receipt) =>
@@ -100,11 +101,7 @@ function Results({ life }: { life: LifeData }) {
               ))}
             </ul>
             {shown < found.length ? (
-              <button
-                type="button"
-                className="btn btn-ghost mt-4 w-full"
-                onClick={() => setShown(shown + PAGE_SIZE)}
-              >
+              <button type="button" className="btn btn-ghost mt-4 w-full" onClick={showMore}>
                 Show {formatNumber(Math.min(PAGE_SIZE, found.length - shown))} more of{' '}
                 {formatNumber(found.length - shown)} left
               </button>

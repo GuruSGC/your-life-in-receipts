@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import type { Chapter, MonthRow } from '@/types'
 import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/utils/format'
 import { formatMonth } from '@/utils/time'
@@ -22,6 +22,8 @@ export function MonthlyJourney({ months, chapters }: Props) {
     )
     return busiest
   })
+  const moveIndex = (event: ChangeEvent<HTMLInputElement>): void =>
+    setIndex(Number(event.target.value))
   const step = WIDTH / (months.length - 1)
   const maxMinutes = Math.max(...months.map((row) => row.minutes), 1)
   const maxSpend = Math.max(...months.map((row) => row.spendOut), 1)
@@ -94,7 +96,7 @@ export function MonthlyJourney({ months, chapters }: Props) {
         min={0}
         max={months.length - 1}
         value={index}
-        onChange={(event) => setIndex(Number(event.target.value))}
+        onChange={moveIndex}
         aria-valuetext={formatMonth(current.key)}
         className="mt-1 h-11 w-full cursor-pointer accent-[var(--accent)]"
       />

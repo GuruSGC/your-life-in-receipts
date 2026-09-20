@@ -1,4 +1,5 @@
 import type { Link } from '@/types'
+import { ValueButton } from '@/components/ValueButton'
 import { THEME_LABELS } from '@/constants'
 import { useDrawer } from '@/context/drawerApi'
 import { formatNumber, formatPercent } from '@/utils/format'
@@ -59,13 +60,9 @@ export function LinkDetail({ link }: { link: Link }) {
       <ul className="mt-2 flex flex-wrap gap-2">
         {link.sampleDays.map((day) => (
           <li key={day}>
-            <button
-              type="button"
-              className="chip !px-3 !text-[0.8rem]"
-              onClick={() => openDay(day)}
-            >
+            <ValueButton value={day} onPick={openDay} className="chip !px-3 !text-[0.8rem]">
               {formatDay(day)}
-            </button>
+            </ValueButton>
           </li>
         ))}
       </ul>

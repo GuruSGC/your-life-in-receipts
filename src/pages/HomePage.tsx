@@ -6,10 +6,12 @@ import { InsightCard } from '@/features/story/components/InsightCard'
 import { SurpriseButton } from '@/features/story/components/SurpriseButton'
 import { JourneyStrip } from '@/features/story/components/JourneyStrip'
 import { TotalsReceipt } from '@/features/story/components/TotalsReceipt'
+import { ChapterCover } from '@/components/ChapterCover'
 import { DataGate } from '@/components/DataGate'
 import { PageTitle } from '@/components/PageTitle'
 import { formatNumber } from '@/utils/format'
 
+const printReceipt = (): void => window.print()
 const HIGHLIGHTS = ['night-owl', 'peak-year', 'top-link']
 
 /** Page: the whole life as one receipt, the findings easiest to miss, and the journey. */
@@ -33,7 +35,7 @@ export default function HomePage() {
           See the connections
         </a>
         <SurpriseButton />
-        <button type="button" className="btn btn-ghost" onClick={() => window.print()}>
+        <button type="button" className="btn btn-ghost" onClick={printReceipt}>
           <Printer size={18} weight="bold" aria-hidden={true} /> Print the receipt
         </button>
       </div>
@@ -86,15 +88,22 @@ function HomeBody({ life, story }: { life: LifeData; story: Story }) {
             >
               <a
                 href={`#/story?chapter=${chapter.index}`}
-                className="flex min-h-11 items-center gap-3 rounded-xl border border-line px-3 py-2 transition-colors hover:border-accent hover:bg-accent-soft"
+                className="block rounded-xl border border-line p-2 transition-colors hover:border-accent hover:bg-accent-soft"
               >
-                <span className="mono grid size-8 place-items-center rounded-full border border-accent text-sm font-semibold text-accent">
-                  {chapter.index}
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate font-semibold">{chapter.persona}</span>
-                  <span className="mono block text-xs text-ink-3">
-                    {chapter.startKey.slice(0, 4)} to {chapter.endKey.slice(0, 4)}
+                <ChapterCover
+                  index={chapter.index}
+                  alt={`Cover art for chapter ${chapter.index}, ${chapter.persona}`}
+                  sizes="(min-width: 1024px) 16rem, (min-width: 640px) 45vw, 90vw"
+                />
+                <span className="mt-2 flex min-h-11 items-center gap-3 px-1">
+                  <span className="mono grid size-8 shrink-0 place-items-center rounded-full border border-accent text-sm font-semibold text-accent">
+                    {chapter.index}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate font-semibold">{chapter.persona}</span>
+                    <span className="mono block text-xs text-ink-3">
+                      {chapter.startKey.slice(0, 4)} to {chapter.endKey.slice(0, 4)}
+                    </span>
                   </span>
                 </span>
               </a>

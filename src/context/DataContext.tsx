@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { withReceipts } from '@/services/data/decode'
-import { loadStory } from '@/services/data'
+import { loadStory } from '@/services/data/loadStory'
 import type { Receipt } from '@/types'
 import { DataContext, type State } from './dataApi'
 

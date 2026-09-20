@@ -1,4 +1,5 @@
 import { PushPin } from '@phosphor-icons/react'
+import { ValueButton } from './ValueButton'
 import { memo, type CSSProperties } from 'react'
 import type { Receipt } from '@/types'
 import { formatRupees } from '@/utils/format'
@@ -68,26 +69,26 @@ function ReceiptRowBase({ receipt, index = 0, onOpen, showDate = false, pinned, 
   return (
     <li className="print flex items-start gap-1" style={style}>
       {onOpen ? (
-        <button
-          type="button"
-          onClick={() => onOpen(receipt)}
+        <ValueButton
+          value={receipt}
+          onPick={onOpen}
           className="flex min-h-11 min-w-0 flex-1 items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-accent-soft"
         >
           {body}
-        </button>
+        </ValueButton>
       ) : (
         <div className="flex min-w-0 flex-1 items-start gap-3 px-3 py-2.5">{body}</div>
       )}
       {onPin ? (
-        <button
-          type="button"
-          onClick={() => onPin(receipt)}
+        <ValueButton
+          value={receipt}
+          onPick={onPin}
           aria-pressed={pinned === true}
           aria-label={`${pinned ? 'Remove from' : 'Pin to'} the scrapbook: ${receipt.title}`}
           className="btn btn-ghost mt-1 size-11 shrink-0 !px-0"
         >
           <PushPin size={18} weight={pinned ? 'fill' : 'regular'} aria-hidden={true} />
-        </button>
+        </ValueButton>
       ) : null}
     </li>
   )

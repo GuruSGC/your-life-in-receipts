@@ -35,7 +35,7 @@ export function loadStory(onReceipts: (receipts: Receipt[]) => void): Promise<Lo
     })
   }
   return new Promise((resolve, reject) => {
-    const worker = new Worker(new URL('../worker/storyWorker.ts', import.meta.url), {
+    const worker = new Worker(new URL('./storyWorker.ts', import.meta.url), {
       type: 'module',
     })
     const received: Receipt[] = []

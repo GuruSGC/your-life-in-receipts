@@ -1,4 +1,5 @@
 import { useState, type CSSProperties } from 'react'
+import { ValueButton } from '@/components/ValueButton'
 import type { MusicAggregates } from '@/types'
 import { formatNumber } from '@/utils/format'
 
@@ -20,17 +21,18 @@ export function ArtistStreams({ music }: { music: MusicAggregates }) {
   const max = Math.max(...years.map((year) => music.playsByYear[String(year)] ?? 0), 1)
   const playsOf = (name: string, year: number): number =>
     music.artistYear.find((row) => row.name === name && row.year === year)?.plays ?? 0
+  const toggleFocus = (name: string): void => setFocus(focus === name ? null : name)
   const colour = (name: string): string => `var(--c-${PALETTE[artists.indexOf(name)] ?? 'other'})`
   return (
     <div>
       <ul className="mb-3 flex flex-wrap gap-2" aria-label="Artists">
         {artists.map((name) => (
           <li key={name}>
-            <button
-              type="button"
+            <ValueButton
+              value={name}
+              onPick={toggleFocus}
               className="chip !text-[0.8rem]"
               aria-pressed={focus === name}
-              onClick={() => setFocus(focus === name ? null : name)}
             >
               <span
                 aria-hidden="true"
@@ -38,7 +40,7 @@ export function ArtistStreams({ music }: { music: MusicAggregates }) {
                 style={{ background: colour(name) }}
               />
               {name}
-            </button>
+            </ValueButton>
           </li>
         ))}
       </ul>

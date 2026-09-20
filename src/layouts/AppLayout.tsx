@@ -1,8 +1,14 @@
-import { Suspense } from 'react'
+import { Suspense, type MouseEvent } from 'react'
 import { AppHeader } from '@/components/AppHeader'
 import { DayDrawer } from '@/components/DayDrawer'
 import { useHashRoute } from '@/hooks/useHashRoute'
 import { PAGES } from '@/routes'
+
+/** The hash belongs to the router, so move focus instead of letting the link change the route. */
+function skipToContent(event: MouseEvent<HTMLAnchorElement>): void {
+  event.preventDefault()
+  document.getElementById('main')?.focus()
+}
 
 /** The frame around every page: skip link, header, the current page, footer and the day drawer. */
 export function AppLayout() {
@@ -10,15 +16,7 @@ export function AppLayout() {
   const Page = PAGES[route]
   return (
     <>
-      <a
-        href="#main"
-        className="skip-link"
-        onClick={(event) => {
-          // The hash belongs to the router, so move focus instead of letting the link change the route.
-          event.preventDefault()
-          document.getElementById('main')?.focus()
-        }}
-      >
+      <a href="#main" className="skip-link" onClick={skipToContent}>
         Skip to content
       </a>
       <AppHeader current={route} />

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ValueButton } from '@/components/ValueButton'
 import { ArcDiagram } from '@/features/connections/components/ArcDiagram'
 import { LinkDetail } from '@/features/connections/components/LinkDetail'
 import { linkKey } from '@/features/connections/utils/linkKey'
@@ -15,6 +16,10 @@ const WINDOWS = [
 function Explorer({ links }: { links: Link[] }) {
   const [windowId, setWindowId] = useState<Link['window']>('diary')
   const [picked, setPicked] = useState<string | null>(null)
+  const pickWindow = (id: Link['window']): void => {
+    setWindowId(id)
+    setPicked(null)
+  }
   const visible = links.filter((link) => link.window === windowId)
   const selected = visible.find((link) => linkKey(link) === picked) ?? visible[0]
   const selectedKey = selected ? linkKey(selected) : null
@@ -22,18 +27,15 @@ function Explorer({ links }: { links: Link[] }) {
     <>
       <div role="group" aria-label="Period" className="mb-6 flex flex-wrap gap-2">
         {WINDOWS.map((item) => (
-          <button
+          <ValueButton
             key={item.id}
-            type="button"
+            value={item.id}
+            onPick={pickWindow}
             className="chip"
             aria-pressed={windowId === item.id}
-            onClick={() => {
-              setWindowId(item.id)
-              setPicked(null)
-            }}
           >
             {item.label}
-          </button>
+          </ValueButton>
         ))}
       </div>
       {visible.length === 0 ? (
@@ -57,10 +59,10 @@ function Explorer({ links }: { links: Link[] }) {
                 const key = linkKey(link)
                 return (
                   <li key={key}>
-                    <button
-                      type="button"
+                    <ValueButton
+                      value={key}
+                      onPick={setPicked}
                       aria-pressed={selectedKey === key}
-                      onClick={() => setPicked(key)}
                       className="paper flex min-h-14 w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent-soft"
                     >
                       <span
@@ -77,7 +79,7 @@ function Explorer({ links }: { links: Link[] }) {
                         </span>
                       </span>
                       <span className="mono text-sm font-semibold">{link.lift.toFixed(1)}×</span>
-                    </button>
+                    </ValueButton>
                   </li>
                 )
               })}

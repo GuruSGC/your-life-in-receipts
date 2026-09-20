@@ -1,4 +1,6 @@
 import { MagnifyingGlass } from '@phosphor-icons/react'
+import type { ChangeEvent, FormEvent } from 'react'
+import { ValueButton } from '@/components/ValueButton'
 import type { ReceiptKind } from '@/types'
 import { MAX_SEARCH_LENGTH, THEMES, THEME_LABELS } from '@/constants'
 import type { Filters, SortKey } from '../utils/search'
@@ -34,18 +36,16 @@ interface SelectFieldProps {
 }
 
 /** A labelled dropdown. */
+const ignoreSubmit = (event: FormEvent): void => event.preventDefault()
+
 function SelectField({ id, label, value, options, onChange }: SelectFieldProps) {
+  const change = (event: ChangeEvent<HTMLSelectElement>): void => onChange(event.target.value)
   return (
     <div className="min-w-0">
       <label htmlFor={id} className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
         {label}
       </label>
-      <select
-        id={id}
-        className="field mt-1 w-full min-w-0"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      >
+      <select id={id} className="field mt-1 w-full min-w-0" value={value} onChange={change}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -65,12 +65,19 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
     const next = has ? filters.kinds.filter((item) => item !== kind) : [...filters.kinds, kind]
     set('kinds', next)
   }
+  const typeQuery = (event: ChangeEvent<HTMLInputElement>): void => set('query', event.target.value)
+  const toggleUndated = (): void => set('includeUndated', !filters.includeUndated)
+  const togglePinned = (): void => set('pinnedOnly', !filters.pinnedOnly)
+  const setTheme = (value: string): void => set('theme', value as Filters['theme'])
+  const setYearFrom = (value: string): void => set('yearFrom', value ? Number(value) : null)
+  const setYearTo = (value: string): void => set('yearTo', value ? Number(value) : null)
+  const setSort = (value: string): void => set('sort', value as SortKey)
   return (
     <form
       role="search"
       aria-label="Search the receipts"
       className="paper space-y-4 p-4 md:p-5"
-      onSubmit={(event) => event.preventDefault()}
+      onSubmit={ignoreSubmit}
     >
       <div>
         <label htmlFor="q" className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
@@ -89,7 +96,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
             placeholder="An artist, a merchant, a place, a word from a note"
             value={filters.query}
             maxLength={MAX_SEARCH_LENGTH}
-            onChange={(event) => set('query', event.target.value)}
+            onChange={typeQuery}
             autoComplete="off"
           />
         </div>
@@ -100,21 +107,21 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
         </legend>
         <div className="flex flex-wrap gap-2">
           {KIND_OPTIONS.map((option) => (
-            <button
+            <ValueButton
               key={option.id}
-              type="button"
+              value={option.id}
+              onPick={toggleKind}
               className="chip"
               aria-pressed={filters.kinds.includes(option.id)}
-              onClick={() => toggleKind(option.id)}
             >
               {option.label}
-            </button>
+            </ValueButton>
           ))}
           <button
             type="button"
             className="chip"
             aria-pressed={filters.includeUndated}
-            onClick={() => set('includeUndated', !filters.includeUndated)}
+            onClick={toggleUndated}
           >
             Include the drawer (no date)
           </button>
@@ -122,7 +129,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
             type="button"
             className="chip"
             aria-pressed={filters.pinnedOnly}
-            onClick={() => set('pinnedOnly', !filters.pinnedOnly)}
+            onClick={togglePinned}
           >
             Scrapbook only ({pinnedCount})
           </button>
@@ -137,7 +144,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
             { value: 'all', label: 'All themes' },
             ...THEMES.map((theme) => ({ value: theme, label: THEME_LABELS[theme] })),
           ]}
-          onChange={(value) => set('theme', value as Filters['theme'])}
+          onChange={setTheme}
         />
         <SelectField
           id="from"
@@ -147,7 +154,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
             { value: '', label: 'Any' },
             ...years.map((year) => ({ value: String(year), label: String(year) })),
           ]}
-          onChange={(value) => set('yearFrom', value ? Number(value) : null)}
+          onChange={setYearFrom}
         />
         <SelectField
           id="to"
@@ -157,14 +164,14 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
             { value: '', label: 'Any' },
             ...years.map((year) => ({ value: String(year), label: String(year) })),
           ]}
-          onChange={(value) => set('yearTo', value ? Number(value) : null)}
+          onChange={setYearTo}
         />
         <SelectField
           id="sort"
           label="Order"
           value={filters.sort}
           options={SORTS.map((sort) => ({ value: sort.id, label: sort.label }))}
-          onChange={(value) => set('sort', value as SortKey)}
+          onChange={setSort}
         />
       </div>
       <button type="button" className="btn btn-ghost" onClick={onReset}>

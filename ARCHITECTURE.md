@@ -19,7 +19,7 @@ buildStory(life)   ->  months, day facts, chapters, links, insights      (pure f
 DataContext  ->  pages, charts and the day drawer
 ```
 
-The worker (`features/data/worker/storyWorker.ts`) exists so decoding and analysis never block a paint or a keystroke. Where module workers are missing, and in tests, `loadStory` does the same work on the main thread.
+The worker (`services/data/storyWorker.ts`) exists so decoding and analysis never block a paint or a keystroke. Where module workers are missing, and in tests, `loadStory` does the same work on the main thread.
 
 ## The data layer
 
@@ -27,7 +27,7 @@ The worker (`features/data/worker/storyWorker.ts`) exists so decoding and analys
 - `decode.ts` turns each compiled file into `Receipt` records, validating every field and throwing a readable error on the first malformed row. `assemble` joins the three sources and indexes receipts by day.
 - Times are minutes since 1970 as recorded (wall clock). No timezone is applied anywhere; the app says so.
 
-## The insight engine (`features/insights`)
+## The insight engine (`services/insights`)
 
 All functions are pure and deterministic.
 

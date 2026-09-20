@@ -11,7 +11,7 @@ Live demo: https://your-life-in-receipts-sand.vercel.app
 
 ## Contents
 
-[Overview](#overview) · [Features](#features) · [Screenshots](#screenshots) · [Tech stack](#tech-stack) · [Getting started](#getting-started) · [Architecture](#architecture) · [Components and hooks](#components-and-hooks) · [Data and method](#data-and-method) · [Testing](#testing) · [Accessibility](#accessibility) · [Performance](#performance) · [Security](#security) · [Deployment](#deployment) · [Verification](#verification) · [Credits](#credits)
+[Overview](#overview) · [Features](#features) · [Screenshots](#screenshots) · [Tech stack](#tech-stack) · [Getting started](#getting-started) · [Usage](#usage) · [Scripts](#scripts) · [Requirement map](#requirement-map) · [Architecture](#architecture) · [Components and hooks](#components-and-hooks) · [Data and method](#data-and-method) · [Testing](#testing) · [Accessibility](#accessibility) · [Performance](#performance) · [Security](#security) · [Deployment](#deployment) · [Verification](#verification) · [Roadmap](#roadmap) · [Known limitations](#known-limitations) · [Troubleshooting](#troubleshooting) · [Contributing](#contributing) · [Credits](#credits)
 
 More detail lives in [ARCHITECTURE.md](ARCHITECTURE.md), [docs/DATA.md](docs/DATA.md), [docs/COMPONENTS.md](docs/COMPONENTS.md), [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
@@ -88,23 +88,21 @@ src/
   layouts/                  The frame around every page
   routes/                   Lazy page map
   pages/                    One file per route: Home, Story, Connections, Rhythms, Explore, Method
-  features/
-    data/                   Types, decoding and validation, the loader, the worker
+  features/                 Interface modules, each with a barrel: story, connections, rhythms, explore
+  components/               Header, drawer, receipt row, chapter cover, moment chain, page title, data gate
+  context/                  Data, drawer and pins providers and their hooks
+  hooks/                    Hash routing, theme, autoplay, heading focus
+  services/
+    data/                   Decoding and validation, the loader and the worker
     insights/               Pure functions: series, chapters, personas, links, insights
-    story/                  Insight cards, chapter view, journey strip, totals receipt
-    connections/            Arc diagram, link detail
-    rhythms/                Heatmap, monthly journey, artist streams
-    explore/                Search and filter logic, controls
-  components/               Header, drawer, receipt row, page title, data gate
-  context/                  Data and drawer providers and their hooks
-  hooks/                    Hash routing, theme, heading focus
-  services/                 The only file that touches localStorage
-  utils/                    Time and number formatting
-  constants/                Themes, labels, storage keys
+    storage.ts, pins.ts     The only code that touches browser storage
+  utils/                    Time, number formatting and the moment chain
+  constants/                Themes, labels, routes, storage keys
   types/                    Shared domain types in one place
   index.css                 Tokens, base, components, motion (one stylesheet)
-scripts/                    Data build and the verification scripts
-tests/                      Unit, integration and independent-recomputation tests
+public/img/                 Chapter covers in three widths and the social preview, drawn by script
+scripts/                    Data build, image generator and the verification scripts
+tests/                      Unit, component, integration and independent-recomputation tests
 ```
 
 Decisions worth knowing:
@@ -197,6 +195,72 @@ The project was built against a ledger of measurable gates (`GATES.md`). Each on
 | Lighthouse, bundle size                                    | `verify-efficiency`              |
 | Security                                                   | `verify-security`                |
 | Modern stack                                               | `verify-stack`                   |
+
+## Usage
+
+1. Open the home page. The receipt on the left is the whole life in one place; the three cards beside it are the findings easiest to miss.
+2. Choose **Start the story** to read the seven chapters in order, or **Play the story** to have them read to you.
+3. Open **Connections** to see which artists keep landing on the same days as which kinds of spending, and select a pair to see those days.
+4. Open **Explore** to search every receipt. Filters and the search text live in the address, so a search can be shared as a link.
+5. Pin receipts to the **scrapbook** from any result, then choose "Scrapbook only" to look at just those.
+6. Choose **Surprise me** on the home page for a random day where the music and the money met.
+
+## Prerequisites
+
+Node.js 20 or newer and npm 10 or newer. No accounts, keys or backend are needed.
+
+## Scripts
+
+| Script                 | What it does                                                          |
+| ---------------------- | --------------------------------------------------------------------- |
+| `npm run dev`          | Starts the Vite development server                                    |
+| `npm run build`        | Type-checks the whole project, then builds for production into `dist` |
+| `npm run preview`      | Serves the production build locally                                   |
+| `npm test`             | Runs the unit, component and integration tests once                   |
+| `npm run coverage`     | Runs the tests with coverage and enforces the thresholds              |
+| `npm run lint`         | ESLint with zero warnings allowed                                     |
+| `npm run typecheck`    | TypeScript in strict mode, no output                                  |
+| `npm run format:check` | Prettier check over the whole repository                              |
+
+## Environment variables
+
+None. The app reads only the compiled files in `public/data`, so `.env.example` is empty on purpose.
+
+## Requirement map
+
+| The brief asks for                                    | Where it lives                                                                                        |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Raw Data → Insights                                   | `src/services/data` decodes and validates; `src/services/insights` computes the findings              |
+| Insights → Connections                                | `src/services/insights/links.ts` and `src/features/connections`                                       |
+| Connections → Story                                   | `src/services/insights/chapters.ts` and `src/features/story`                                          |
+| Not a timeline: relationships between kinds of record | The moment chain in `src/components/MomentChain.tsx` reads each day as music and spending steps       |
+| "What kind of person was the user in each period?"    | One named persona per chapter, chosen by the trait that sets it furthest from the whole timeline      |
+| Filtering, searching, navigation                      | `src/features/explore`, the header, the chapter tabs and the journey strip                            |
+| Visual journey                                        | `src/features/story/components/JourneyStrip.tsx` and the chapter covers in `public/img`               |
+| Responsive design                                     | One stylesheet with tiers from 320 px to 4K, container queries, fluid type and touch targets of 44 px |
+| Frontend only                                         | No network calls except the compiled files under `/data`; no server, no keys                          |
+
+## Roadmap
+
+- Cover art drawn from each chapter's own months instead of a shared set.
+- A compare view for two chapters side by side.
+- Export of the scrapbook as a single printable receipt.
+
+## Known limitations
+
+- Only three sources were provided (listening, household ledger, card statement), so the "song, place, photo, purchase" chains are limited to music and spending.
+- Artist-to-spending connections show that two things share days, not that one causes the other. The Method page says so beside every number.
+- 102 card receipts have no date; they stay searchable but cannot join a day.
+
+## Troubleshooting
+
+- **The page stays on "Printing your receipts".** The data files could not be fetched. Check the network tab for `/data/*.json`, then choose "Try again".
+- **Print shows a blank page.** Use the "Print the receipt" button on the home page; the print stylesheet hides the navigation.
+- **`npm run build` fails on types.** Run `npm run typecheck` to see the first error; the project builds with strict TypeScript.
+
+## Contributing
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md). Commits use conventional messages (`feat:`, `fix:`, `docs:`), and every change keeps `npm run lint`, `npm test` and `npm run build` green.
 
 ## Credits
 

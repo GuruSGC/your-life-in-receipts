@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react'
 import type { Link } from '@/types'
 import { THEME_LABELS } from '@/constants'
 import { linkKey } from '../utils/linkKey'
@@ -20,6 +21,8 @@ interface Props {
 
 /** Artists on the left, life themes on the right, one curve per surprising overlap. The list beside it is the accessible twin. */
 export function ArcDiagram({ links, selected, onSelect }: Props) {
+  const select = (event: MouseEvent<SVGPathElement>): void =>
+    onSelect(event.currentTarget.dataset['key'] ?? '')
   const artists = [...new Set(links.map((link) => link.artist))]
   const themes = [...new Set(links.map((link) => link.theme))]
   const rows = Math.max(artists.length, themes.length)
@@ -44,7 +47,8 @@ export function ArcDiagram({ links, selected, onSelect }: Props) {
             strokeLinecap="round"
             opacity={pathOpacity(selected, key)}
             className="fade-swap cursor-pointer"
-            onClick={() => onSelect(key)}
+            data-key={key}
+            onClick={select}
           />
         )
       })}

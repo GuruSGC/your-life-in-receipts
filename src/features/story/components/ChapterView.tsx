@@ -2,6 +2,8 @@ import { ArrowLeft, ArrowRight } from '@phosphor-icons/react'
 import { useRef, type CSSProperties } from 'react'
 import type { LifeData, Receipt } from '@/types'
 import type { Chapter, Insight, Story } from '@/types'
+import { ChapterCover } from '@/components/ChapterCover'
+import { ValueButton } from '@/components/ValueButton'
 import { THEME_LABELS } from '@/constants'
 import { useFocusHeading } from '@/hooks/useFocusHeading'
 import { useDrawer } from '@/context/drawerApi'
@@ -55,9 +57,9 @@ function MomentBody(props: {
         The richest day in this chapter: {formatNumber(receipts.length)} receipts from{' '}
         {new Set(receipts.map((r) => r.kind)).size} different sources.
       </p>
-      <button type="button" className="btn btn-primary mt-4" onClick={() => onOpen(day)}>
+      <ValueButton value={day} onPick={onOpen} className="btn btn-primary mt-4">
         Open that day
-      </button>
+      </ValueButton>
     </div>
   )
 }
@@ -102,6 +104,13 @@ export function ChapterView({ life, story, chapter, onStep }: Props) {
           </h1>
         </div>
       </div>
+      <ChapterCover
+        index={chapter.index}
+        alt={`Cover art for chapter ${chapter.index}: abstract listening waveform`}
+        sizes="(min-width: 1152px) 72rem, 100vw"
+        priority
+        className="mt-5 max-h-64 object-cover"
+      />
       <p className="mt-4 max-w-3xl text-lg text-ink-2">{chapter.blurb}</p>
       <p className="mono mt-2 text-xs text-ink-3">
         Receipts in this chapter come from:{' '}
@@ -164,22 +173,22 @@ export function ChapterView({ life, story, chapter, onStep }: Props) {
       ) : null}
 
       <nav aria-label="Chapters" className="mt-10 flex gap-3">
-        <button
-          type="button"
+        <ValueButton
+          value={chapter.index - 1}
+          onPick={onStep}
           className="btn btn-ghost flex-1 md:flex-none"
           disabled={chapter.index <= 1}
-          onClick={() => onStep(chapter.index - 1)}
         >
           <ArrowLeft size={18} weight="bold" aria-hidden={true} /> Previous chapter
-        </button>
-        <button
-          type="button"
+        </ValueButton>
+        <ValueButton
+          value={chapter.index + 1}
+          onPick={onStep}
           className="btn btn-primary flex-1 md:flex-none"
           disabled={chapter.index >= total}
-          onClick={() => onStep(chapter.index + 1)}
         >
           Next chapter <ArrowRight size={18} weight="bold" aria-hidden={true} />
-        </button>
+        </ValueButton>
       </nav>
     </article>
   )

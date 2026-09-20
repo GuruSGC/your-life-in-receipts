@@ -7,6 +7,7 @@ import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/utils/format'
 import { formatDay, formatWeekday } from '@/utils/time'
 import { MomentChain } from '@/components/MomentChain'
+import { ValueButton } from './ValueButton'
 import { ReceiptRow } from './ReceiptRow'
 
 const SEARCH_LIMIT_DAYS = 400
@@ -54,6 +55,9 @@ function DayContent({
   const { pinned, toggle } = usePins()
   const before = neighbour(life, day, -1)
   const after = neighbour(life, day, 1)
+  const goTo = (target: number | null): void => {
+    if (target !== null) onDay(target)
+  }
   return (
     <>
       <p className="mono text-xs uppercase tracking-[0.14em] text-accent">{formatWeekday(day)}</p>
@@ -80,22 +84,22 @@ function DayContent({
         <p className="mt-2 text-sm text-ink-3">Showing the first 60 of {receipts.length}.</p>
       ) : null}
       <div className="mt-5 flex gap-2">
-        <button
-          type="button"
+        <ValueButton
+          value={before}
+          onPick={goTo}
           className="btn btn-ghost flex-1"
           disabled={before === null}
-          onClick={() => before !== null && onDay(before)}
         >
           <ArrowLeft size={18} weight="bold" aria-hidden={true} /> Earlier day
-        </button>
-        <button
-          type="button"
+        </ValueButton>
+        <ValueButton
+          value={after}
+          onPick={goTo}
           className="btn btn-ghost flex-1"
           disabled={after === null}
-          onClick={() => after !== null && onDay(after)}
         >
           Later day <ArrowRight size={18} weight="bold" aria-hidden={true} />
-        </button>
+        </ValueButton>
       </div>
     </>
   )

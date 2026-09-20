@@ -1,7 +1,29 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter-tight/index.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/600.css';
+
+@font-face {
+  font-family: 'Inter Tight Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/inter-tight-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Inter Tight Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/inter-tight-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
@@ -157,9 +179,9 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 0.125rem solid var(--focus);
+  outline-offset: 0.125rem;
+  border-radius: 0.25rem;
 }
 
 h1,
@@ -210,7 +232,7 @@ p {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 0.875rem;
   box-shadow: var(--shadow);
 }
 
@@ -220,7 +242,7 @@ p {
   background: var(--surface);
   border: 1px solid var(--line);
   border-bottom: 0;
-  border-radius: 12px 12px 0 0;
+  border-radius: 0.75rem 0.75rem 0 0;
   box-shadow: var(--shadow);
   padding-bottom: 1.25rem;
   margin-bottom: 10px;
@@ -247,7 +269,7 @@ p {
   order: 1;
   flex: 1;
   content: '';
-  border-bottom: 2px dotted var(--line-strong);
+  border-bottom: 0.125rem dotted var(--line-strong);
   transform: translateY(-0.25em);
 }
 
@@ -264,15 +286,15 @@ p {
   place-items: center;
   width: 3.25rem;
   height: 3.25rem;
-  border: 2px solid var(--accent);
-  border-radius: 999px;
+  border: 0.125rem solid var(--accent);
+  border-radius: 62rem;
   color: var(--accent);
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 1.05rem;
   transform: rotate(-8deg);
-  outline: 2px dashed color-mix(in oklab, var(--accent) 45%, transparent);
-  outline-offset: 3px;
+  outline: 0.125rem dashed color-mix(in oklab, var(--accent) 45%, transparent);
+  outline-offset: 0.1875rem;
 }
 
 .chip {
@@ -282,7 +304,7 @@ p {
   min-height: 2.75rem;
   padding: 0 0.9rem;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
+  border-radius: 62rem;
   background: var(--surface);
   color: var(--ink-2);
   font-size: 0.9rem;
@@ -309,7 +331,7 @@ p {
   min-height: 2.75rem;
   padding: 0 1.1rem;
   border: 1px solid transparent;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -349,7 +371,7 @@ p {
   min-height: 2.75rem;
   padding: 0 0.85rem;
   border: 1px solid var(--line-strong);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: var(--surface);
   color: var(--ink);
   font: inherit;
@@ -366,7 +388,7 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
   .lift:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
   }
 }
 
@@ -432,9 +454,9 @@ p {
   position: relative;
   z-index: 1;
   height: 0.8rem;
-  border-radius: 999px;
+  border-radius: 62rem;
   background: linear-gradient(180deg, var(--ink-2), var(--ink));
-  box-shadow: 0 2px 0 var(--line-strong);
+  box-shadow: 0 0.125rem 0 var(--line-strong);
 }
 
 @media print {
@@ -448,7 +470,7 @@ p {
 @keyframes print-in {
   from {
     opacity: 0;
-    transform: translateY(-14px);
+    transform: translateY(-0.875rem);
   }
   to {
     opacity: 1;
@@ -625,5 +647,79 @@ dialog.drawer::backdrop {
   footer {
     max-width: min(72rem, 1600px);
     margin-inline: auto;
+  }
+}
+
+/* ---------------------------------------------------------------- fluid spacing and every screen tier */
+:root {
+  --card-pad: clamp(1rem, 0.7rem + 1.2vw, 1.75rem);
+}
+
+.ticket {
+  padding: var(--card-pad);
+}
+
+/* Small phones: 360 px and below. */
+@media (max-width: 22.5rem) {
+  :root {
+    --card-pad: 0.875rem;
+  }
+  .btn {
+    padding-inline: 0.75rem;
+  }
+}
+
+/* Large phones and small tablets. */
+@media (min-width: 30rem) {
+  :root {
+    --card-pad: 1.25rem;
+  }
+}
+
+/* Tablets in portrait. */
+@media (min-width: 48rem) {
+  :root {
+    --card-pad: 1.5rem;
+  }
+}
+
+/* Laptops and small desktops. */
+@media (min-width: 64rem) {
+  :root {
+    --card-pad: 1.75rem;
+  }
+}
+
+/* Desktops. */
+@media (min-width: 80rem) {
+  :root {
+    --card-pad: 2rem;
+  }
+}
+
+/* A phone held sideways has little height: let the header scroll away and keep dialogs inside the screen. */
+@media (orientation: landscape) and (max-height: 32rem) {
+  header {
+    position: static;
+  }
+  dialog.drawer {
+    max-height: 100dvh;
+  }
+}
+
+/* Touch screens: every control at least 44 px tall. */
+@media (pointer: coarse) {
+  .btn,
+  select,
+  input[type='search'],
+  input[type='text'] {
+    min-height: 2.75rem;
+  }
+}
+
+/* 4K screens: the root size doubles so the reading width and the text stay comfortable. */
+@media (min-width: 3840px) {
+  html {
+    font-size: 200%;
   }
 }

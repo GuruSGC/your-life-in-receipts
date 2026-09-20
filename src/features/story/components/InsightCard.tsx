@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { ValueButton } from '@/components/ValueButton'
 import type { Insight } from '@/types'
 import { useDrawer } from '@/context/drawerApi'
 import { formatDay } from '@/utils/time'
@@ -33,13 +34,13 @@ export function InsightCard({ insight, index = 0 }: { insight: Insight; index?: 
           <ul className="mt-2 flex flex-wrap gap-2">
             {insight.evidenceDays.slice(0, MAX_DAYS).map((day) => (
               <li key={day}>
-                <button
-                  type="button"
+                <ValueButton
+                  value={day}
+                  onPick={openDay}
                   className="chip !min-h-11 !px-3 !text-[0.8rem]"
-                  onClick={() => openDay(day)}
                 >
                   {formatDay(day)}
-                </button>
+                </ValueButton>
               </li>
             ))}
           </ul>

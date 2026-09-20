@@ -113,3 +113,7 @@ export const ROUTES = [
 ] as const
 
 export type RouteId = (typeof ROUTES)[number]['id']
+
+/** How many chapter covers exist, and the widths each one is drawn in. */
+export const COVER_COUNT = 7
+export const COVER_WIDTHS = [320, 640, 960] as const
