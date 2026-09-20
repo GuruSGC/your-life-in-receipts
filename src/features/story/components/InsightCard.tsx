@@ -19,7 +19,7 @@ export function InsightCard({ insight, index = 0 }: { insight: Insight; index?: 
   const { openDay } = useDrawer()
   const style = { '--i': index } as CSSProperties
   return (
-    <article className="paper enter cq flex flex-col p-5" style={style}>
+    <article className="paper enter cq lift flex flex-col p-5" style={style}>
       <p className="mono text-xs uppercase tracking-[0.14em] text-accent">
         {GROUP_LABEL[insight.group]}
       </p>

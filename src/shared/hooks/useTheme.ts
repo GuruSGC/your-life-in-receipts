@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { STORAGE_THEME_KEY } from '@/shared/constants'
 import { readJson, writeJson } from '@/shared/services/storage'
 
@@ -30,11 +31,12 @@ export function useTheme(): { theme: ThemeChoice; toggle: () => void } {
     document.documentElement.dataset.theme = theme
   }, [theme])
   const toggle = useCallback(() => {
-    setTheme((current) => {
-      const next = current === 'dark' ? 'light' : 'dark'
-      writeJson(STORAGE_THEME_KEY, next)
-      return next
-    })
-  }, [])
+    const next: ThemeChoice = theme === 'dark' ? 'light' : 'dark'
+    writeJson(STORAGE_THEME_KEY, next)
+    const apply = (): void => setTheme(next)
+    const start = document.startViewTransition?.bind(document)
+    if (!start || window.matchMedia('(prefers-reduced-motion: reduce)').matches) apply()
+    else start(() => flushSync(apply))
+  }, [theme])
   return { theme, toggle }
 }
