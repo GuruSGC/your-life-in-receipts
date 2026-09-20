@@ -1,6 +1,6 @@
 import { useCallback, useSyncExternalStore } from 'react'
-import { flushSync } from 'react-dom'
 import { ROUTES, type RouteId } from '@/constants'
+import { withTransition } from '@/utils/transition'
 
 export interface ParsedHash {
   route: RouteId
@@ -30,16 +30,7 @@ export function redirectPathToHash(location: Location = window.location): void {
  * for reduced motion. Elsewhere the page simply changes.
  */
 function subscribe(callback: () => void): () => void {
-  const onChange = (): void => {
-    const start = document.startViewTransition?.bind(document)
-    if (!start || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      callback()
-      return
-    }
-    start(() => {
-      flushSync(callback)
-    })
-  }
+  const onChange = (): void => withTransition(callback)
   window.addEventListener('hashchange', onChange)
   return () => window.removeEventListener('hashchange', onChange)
 }
