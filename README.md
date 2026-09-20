@@ -2,7 +2,7 @@
 
 An interactive data story built from three unrelated exports: a listening history of 148,350 plays, a household ledger of 2,461 entries and a card statement of 1,300 receipts. The app finds chapters, habits and hidden connections in them and lets you follow each finding back to the days it came from.
 
-Live demo: https://your-life-in-receipts.vercel.app
+Live demo: https://your-life-in-receipts-sand.vercel.app
 
 ![The home page in the light theme](docs/home-light.webp)
 
