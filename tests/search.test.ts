@@ -29,8 +29,6 @@ const sample: Receipt[] = [
     detail: '45 plays',
     theme: 'music',
     search: 'beatles',
-    amount: undefined,
-    direction: undefined,
     listenMinutes: 120,
     plays: 45,
     min: Date.UTC(2018, 0, 1) / 60000,

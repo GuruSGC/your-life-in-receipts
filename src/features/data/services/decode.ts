@@ -120,7 +120,7 @@ export function decodeMusic(raw: unknown): Decoded {
   }
 }
 
-const DIRECTIONS: Array<'out' | 'in' | 'transfer'> = ['out', 'in', 'transfer']
+const DIRECTIONS: ('out' | 'in' | 'transfer')[] = ['out', 'in', 'transfer']
 
 export function ledgerTheme(category: string, subcategory: string): Theme {
   const key = category.toLowerCase()
@@ -197,7 +197,7 @@ export function decodeCard(raw: unknown): Decoded {
       amount: num(row[1], 'card amount'),
       direction: 'out',
       search: words(merchant, category.replace(/_/g, ' '), city, state),
-      place: place || undefined,
+      ...(place ? { place } : {}),
       flagged: row[6] === 1,
     }
   }
