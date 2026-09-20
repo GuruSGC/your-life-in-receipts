@@ -152,7 +152,7 @@ export function DayDrawer() {
       aria-labelledby="drawer-title"
       onClose={close}
       {...LIGHT_DISMISS}
-      className="drawer fixed inset-x-0 bottom-0 m-0 max-h-[88dvh] w-full max-w-none overflow-y-auto rounded-t-2xl border border-line bg-surface p-0 text-ink shadow-2xl md:inset-auto md:m-auto md:max-w-xl md:rounded-2xl"
+      className="drawer fixed inset-x-0 bottom-0 m-0 max-h-[88dvh] w-full max-w-none overflow-y-auto rounded-t-2xl border border-line bg-surface p-0 text-ink shadow-2xl md:inset-0 md:m-auto md:h-fit md:max-w-xl md:rounded-2xl"
     >
       {target && ready ? (
         <div className="p-5 md:p-6">

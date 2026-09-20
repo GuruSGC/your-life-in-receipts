@@ -128,7 +128,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
           </button>
         </div>
       </fieldset>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3">
         <SelectField
           id="theme"
           label="Theme"
