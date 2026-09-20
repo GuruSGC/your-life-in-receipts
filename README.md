@@ -75,7 +75,9 @@ The raw datasets are not in the repository. `scripts/build-data.mjs` compiles th
 
 ```
 src/
-  app/                      App shell, error boundary, lazy routes
+  app/                      App root and error boundary
+  layouts/                  The frame around every page
+  routes/                   Lazy page map
   pages/                    One file per route: Home, Story, Connections, Rhythms, Explore, Method
   features/
     data/                   Types, decoding and validation, the loader, the worker
@@ -84,13 +86,14 @@ src/
     connections/            Arc diagram, link detail
     rhythms/                Heatmap, monthly journey, artist streams
     explore/                Search and filter logic, controls
-  shared/
-    components/             Header, drawer, receipt row, page title, data gate
-    context/                Data and drawer providers
-    hooks/                  Hash routing, theme, heading focus
-    services/               The only file that touches localStorage
-    utils/                  Time and number formatting
-    constants/              Themes, labels, storage keys
+  components/               Header, drawer, receipt row, page title, data gate
+  context/                  Data and drawer providers and their hooks
+  hooks/                    Hash routing, theme, heading focus
+  services/                 The only file that touches localStorage
+  utils/                    Time and number formatting
+  constants/                Themes, labels, storage keys
+  types/                    Shared domain types in one place
+  styles/                   Tokens, base, components, motion
 scripts/                    Data build and the verification scripts
 tests/                      Unit, integration and independent-recomputation tests
 ```
