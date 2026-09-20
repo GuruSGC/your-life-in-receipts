@@ -56,7 +56,7 @@ function Results({ life }: { life: LifeData }) {
   )
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-8">
-      <div className="lg:sticky lg:top-24 lg:self-start">
+      <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
         <ExploreControls
           filters={filters}
           years={years}
@@ -65,7 +65,7 @@ function Results({ life }: { life: LifeData }) {
           pinnedCount={pinned.size}
         />
       </div>
-      <section aria-labelledby="results-title">
+      <section aria-labelledby="results-title" className="min-w-0">
         <h2 id="results-title" className="sr-only">
           Results
         </h2>

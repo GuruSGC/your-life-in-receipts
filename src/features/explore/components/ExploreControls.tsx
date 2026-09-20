@@ -36,13 +36,13 @@ interface SelectFieldProps {
 /** A labelled dropdown. */
 function SelectField({ id, label, value, options, onChange }: SelectFieldProps) {
   return (
-    <div>
+    <div className="min-w-0">
       <label htmlFor={id} className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
         {label}
       </label>
       <select
         id={id}
-        className="field mt-1 w-full"
+        className="field mt-1 w-full min-w-0"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       >
@@ -94,7 +94,7 @@ export function ExploreControls({ filters, years, onChange, onReset, pinnedCount
           />
         </div>
       </div>
-      <fieldset>
+      <fieldset className="min-w-0">
         <legend className="mono mb-1 text-xs uppercase tracking-[0.14em] text-ink-2">
           Kind of receipt
         </legend>
