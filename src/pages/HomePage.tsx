@@ -1,4 +1,4 @@
-import { ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, Printer } from '@phosphor-icons/react'
 import type { CSSProperties } from 'react'
 import type { LifeData } from '@/features/data'
 import type { Story } from '@/features/insights'
@@ -20,7 +20,7 @@ export default function HomePage() {
         side they show chapters, habits and quiet connections. Start with the story, or dig through
         the receipts yourself.
       </p>
-      <div className="mb-10 flex flex-wrap gap-3">
+      <div className="no-print mb-10 flex flex-wrap gap-3">
         <a href="#/story" className="btn btn-primary">
           Start the story <ArrowRight size={18} weight="bold" aria-hidden={true} />
         </a>
@@ -30,6 +30,9 @@ export default function HomePage() {
         <a href="#/connections" className="btn btn-ghost">
           See the connections
         </a>
+        <button type="button" className="btn btn-ghost" onClick={() => window.print()}>
+          <Printer size={18} weight="bold" aria-hidden={true} /> Print the receipt
+        </button>
       </div>
       <DataGate>{({ life, story }) => <HomeBody life={life} story={story} />}</DataGate>
     </>

@@ -151,3 +151,71 @@
 .field::placeholder {
   color: var(--ink-3);
 }
+
+/* Cards that respond to a pointer lift a little; touch screens skip it. */
+.lift {
+  transition: transform calc(var(--dur-hover) * var(--motion-scale) * 1ms) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Printing turns the page into a plain receipt: monospaced, black on white, no chrome. */
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-family: var(--font-mono);
+    font-size: 11pt;
+  }
+
+  header.sticky,
+  nav,
+  footer,
+  dialog,
+  .no-print,
+  .skip-link,
+  svg {
+    display: none !important;
+  }
+
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .paper,
+  .ticket {
+    background: #fff !important;
+    border: 1px dashed #000 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    color: #000 !important;
+  }
+
+  .ticket::after {
+    display: none;
+  }
+
+  .enter,
+  .print,
+  .page-enter {
+    animation: none !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  h1::after {
+    content: ' (printed from the receipts)';
+    font-size: 10pt;
+    font-weight: 400;
+  }
+}
