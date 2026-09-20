@@ -3,7 +3,7 @@ import type { Receipt } from '@/features/data'
 import { readPins, writePins } from '@/services/pins'
 import { PinsContext } from './pinsApi'
 
-/** Keeps the scrapbook in memory and in localStorage. */
+/** Keeps the scrapbook in memory and in browser storage. */
 export function PinsProvider({ children }: { children: ReactNode }) {
   const [pinned, setPinned] = useState<ReadonlySet<string>>(() => new Set(readPins()))
   const toggle = useCallback((receipt: Receipt) => {
