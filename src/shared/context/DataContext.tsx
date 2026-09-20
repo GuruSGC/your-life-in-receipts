@@ -1,28 +1,8 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { withReceipts } from '@/features/data/services/decode'
 import { loadStory } from '@/features/data/services/loadStory'
-import type { LifeData, Receipt } from '@/features/data'
-import type { Story } from '@/features/insights'
-
-type State =
-  | { status: 'loading' }
-  | { status: 'error'; message: string }
-  | { status: 'ready'; life: LifeData; story: Story }
-
-interface DataApi {
-  state: State
-  reload: () => void
-}
-
-const DataContext = createContext<DataApi | null>(null)
+import type { Receipt } from '@/features/data'
+import { DataContext, type State } from './dataApi'
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<State>({ status: 'loading' })
@@ -64,18 +44,4 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [])
   const value = useMemo(() => ({ state, reload }), [state, reload])
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function useData(): DataApi {
-  const value = useContext(DataContext)
-  if (!value) throw new Error('useData must be used inside DataProvider')
-  return value
-}
-
-/** Returns the loaded data, or null while it is loading or after it failed. */
-// eslint-disable-next-line react-refresh/only-export-components
-export function useReady(): { life: LifeData; story: Story } | null {
-  const { state } = useData()
-  return state.status === 'ready' ? { life: state.life, story: state.story } : null
 }

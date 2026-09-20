@@ -8,10 +8,23 @@ import { LEDGER_THEME } from '@/shared/constants'
 const expectedFile = '.verify/expected.json'
 const read = (name: string): unknown => JSON.parse(readFileSync(`public/data/${name}.json`, 'utf8'))
 
+interface Expected {
+  totalPlays: number
+  nightShare: number
+  topArtist: string
+  topPlays: number
+  peakYear: number
+  peakPlays: number
+  worstYear: number
+  worstRate: number
+  ledgerExpenseByCategory: Record<string, number>
+  beatlesFood: { lift: number; foodDays: number; both: number }
+}
+
 describe.skipIf(!existsSync(expectedFile))('findings agree with the raw data', () => {
   const expected = JSON.parse(
     existsSync(expectedFile) ? readFileSync(expectedFile, 'utf8') : '{}',
-  ) as Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  ) as Expected
   const life = assemble(
     decodeMusic(read('music')),
     decodeLedger(read('ledger')),

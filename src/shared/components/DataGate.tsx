@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { LifeData } from '@/features/data'
 import type { Story } from '@/features/insights'
-import { useData } from '@/shared/context/DataContext'
+import { useData } from '@/shared/context/dataApi'
 
 const SKELETON_WIDTHS = [70, 92, 55, 84, 62]
 

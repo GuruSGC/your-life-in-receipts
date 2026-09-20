@@ -1,13 +1,15 @@
 import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 import type { LifeData, Receipt } from '@/features/data'
-import { useReady } from '@/shared/context/DataContext'
-import { useDrawer, type DrawerTarget } from '@/shared/context/DrawerContext'
+import { useReady } from '@/shared/context/dataApi'
+import { useDrawer, type DrawerTarget } from '@/shared/context/drawerApi'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/shared/utils/format'
 import { formatDay, formatWeekday } from '@/shared/utils/time'
 import { ReceiptRow } from './ReceiptRow'
 
 const SEARCH_LIMIT_DAYS = 400
+/** Lets the browser close the dialog on a backdrop click or Escape, without a script handler. Older browsers keep Escape and the Close button. */
+const LIGHT_DISMISS: Record<string, string> = { closedby: 'any' }
 
 function neighbour(life: LifeData, day: number, step: 1 | -1): number | null {
   for (let offset = 1; offset <= SEARCH_LIMIT_DAYS; offset += 1) {
@@ -135,15 +137,11 @@ export function DayDrawer() {
   }, [target])
 
   return (
-    // A backdrop click is a pointer shortcut only; Escape and the Close button cover the keyboard.
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
     <dialog
       ref={ref}
       aria-labelledby="drawer-title"
       onClose={close}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) close()
-      }}
+      {...LIGHT_DISMISS}
       className="drawer fixed inset-x-0 bottom-0 m-0 max-h-[88dvh] w-full max-w-none overflow-y-auto rounded-t-2xl border border-line bg-surface p-0 text-ink shadow-2xl md:inset-auto md:m-auto md:max-w-xl md:rounded-2xl"
     >
       {target && ready ? (
