@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import type { LifeData } from '@/features/data'
 import type { Story } from '@/features/insights'
 import { InsightCard } from '@/features/story/components/InsightCard'
+import { SurpriseButton } from '@/features/story/components/SurpriseButton'
 import { JourneyStrip } from '@/features/story/components/JourneyStrip'
 import { TotalsReceipt } from '@/features/story/components/TotalsReceipt'
 import { DataGate } from '@/components/DataGate'
@@ -31,6 +32,7 @@ export default function HomePage() {
         <a href="#/connections" className="btn btn-ghost">
           See the connections
         </a>
+        <SurpriseButton />
         <button type="button" className="btn btn-ghost" onClick={() => window.print()}>
           <Printer size={18} weight="bold" aria-hidden={true} /> Print the receipt
         </button>
