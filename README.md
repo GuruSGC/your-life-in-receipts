@@ -180,7 +180,7 @@ A static build on Vercel: build command `npm run build`, output `dist`. `vercel.
 
 ## Verification
 
-The project was built against a ledger of measurable gates (`GATES.md`). Each one has a script, and all of them run on the production build:
+Each quality claim is backed by a script in `scripts/`, and all of them run on the production build:
 
 | Gate                                                       | Script                           |
 | ---------------------------------------------------------- | -------------------------------- |
