@@ -1,8 +1,13 @@
+/** The localStorage key that remembers the chosen theme. */
 export const STORAGE_THEME_KEY = 'life-receipts:theme:v1'
+/** Where the compiled data files are served from. */
 export const DATA_BASE_PATH = '/data'
+/** Minutes in a day, used to turn minute timestamps into day numbers. */
 export const MINUTES_PER_DAY = 1440
+/** The longest search text the interface accepts. */
 export const MAX_SEARCH_LENGTH = 80
 
+/** The kinds of life the receipts are grouped into. */
 export const THEMES = [
   'music',
   'food',
@@ -18,6 +23,7 @@ export const THEMES = [
 
 export type Theme = (typeof THEMES)[number]
 
+/** Human-readable names for each theme. */
 export const THEME_LABELS: Record<Theme, string> = {
   music: 'Music',
   food: 'Food',

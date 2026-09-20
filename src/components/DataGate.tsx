@@ -20,6 +20,7 @@ function LoadingReceipt() {
   )
 }
 
+/** Renders its children once the receipts have loaded, and a loading or retry state otherwise. */
 export function DataGate({
   children,
 }: {

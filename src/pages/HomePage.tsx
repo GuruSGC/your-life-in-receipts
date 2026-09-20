@@ -11,6 +11,7 @@ import { formatNumber } from '@/utils/format'
 
 const HIGHLIGHTS = ['night-owl', 'peak-year', 'top-link']
 
+/** Page: the whole life as one receipt, the findings easiest to miss, and the journey. */
 export default function HomePage() {
   return (
     <>

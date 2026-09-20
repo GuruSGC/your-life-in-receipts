@@ -11,8 +11,10 @@ export interface DrawerApi {
   close: () => void
 }
 
+/** React context carrying the day drawer state. */
 export const DrawerContext = createContext<DrawerApi | null>(null)
 
+/** Reads the drawer context; throws if used outside the provider. */
 export function useDrawer(): DrawerApi {
   const value = useContext(DrawerContext)
   if (!value) throw new Error('useDrawer must be used inside DrawerProvider')

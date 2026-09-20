@@ -14,6 +14,7 @@ export interface Filters {
   sort: SortKey
 }
 
+/** The filters Explore starts with: everything, newest first. */
 export const DEFAULT_FILTERS: Filters = {
   query: '',
   kinds: ['listen', 'ledger', 'card'],
@@ -54,6 +55,7 @@ function undatedOrder(a: Receipt, b: Receipt): number {
   return a.min === null ? 1 : -1
 }
 
+/** Applies search, kind, theme and year filters and sorts the result. */
 export function filterReceipts(receipts: Receipt[], filters: Filters): Receipt[] {
   const kinds = new Set(filters.kinds)
   const found = receipts.filter(
@@ -71,6 +73,7 @@ export function filterReceipts(receipts: Receipt[], filters: Filters): Receipt[]
   })
 }
 
+/** Counts the receipts, the money spent and the minutes of music in a result set. */
 export function summarise(found: Receipt[]): { count: number; spend: number; minutes: number } {
   let spend = 0
   let minutes = 0

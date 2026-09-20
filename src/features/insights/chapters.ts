@@ -225,6 +225,7 @@ function blurbOf(traits: Measured, money: ReturnType<typeof spendTheme>): string
   return `${parts.join('. ')}.`
 }
 
+/** Splits the timeline into chapters and names each after what sets it apart. */
 export function buildChapters(
   life: LifeData,
   months: MonthRow[],

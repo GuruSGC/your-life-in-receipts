@@ -95,6 +95,7 @@ function Results({ life }: { life: LifeData }) {
   )
 }
 
+/** Page: search and filter every receipt, and open any day. */
 export default function ExplorePage() {
   return (
     <DataGate>

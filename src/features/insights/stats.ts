@@ -1,6 +1,9 @@
+/** Adds up a list of numbers. */
 export const sum = (values: number[]): number => values.reduce((total, value) => total + value, 0)
+/** The average of a list of numbers, or 0 for an empty list. */
 export const mean = (values: number[]): number => (values.length ? sum(values) / values.length : 0)
 
+/** The middle value of a list of numbers, or 0 for an empty list. */
 export function median(values: number[]): number {
   if (!values.length) return 0
   const sorted = [...values].sort((a, b) => a - b)
@@ -10,12 +13,14 @@ export function median(values: number[]): number {
     : ((sorted[middle - 1] ?? 0) + (sorted[middle] ?? 0)) / 2
 }
 
+/** The value at a given fraction of the way through the sorted numbers. */
 export function quantile(values: number[], q: number): number {
   if (!values.length) return 0
   const sorted = [...values].sort((a, b) => a - b)
   return sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))] ?? 0
 }
 
+/** The Pearson correlation of two lists, from -1 to 1, or 0 when it is undefined. */
 export function pearson(xs: number[], ys: number[]): number {
   const n = Math.min(xs.length, ys.length)
   if (n < 3) return 0

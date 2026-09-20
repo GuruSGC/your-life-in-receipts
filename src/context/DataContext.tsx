@@ -4,6 +4,7 @@ import { loadStory } from '@/features/data/services/loadStory'
 import type { Receipt } from '@/features/data'
 import { DataContext, type State } from './dataApi'
 
+/** Loads the receipts once, builds the story, and shares both with the whole app. */
 export function DataProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<State>({ status: 'loading' })
   const [attempt, setAttempt] = useState(0)

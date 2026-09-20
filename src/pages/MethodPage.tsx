@@ -34,6 +34,7 @@ const LIMITS = [
   "An artist counts as played on a day when they led one of that day's listening sessions; sessions keep their three most played artists.",
 ]
 
+/** Page: what the data looked like, how the story is found, and what it cannot know. */
 export default function MethodPage() {
   return (
     <DataGate>

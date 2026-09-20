@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import type { Receipt } from '@/features/data'
 import { DrawerContext, type DrawerTarget } from './drawerApi'
 
+/** Holds which day or receipt the drawer is showing and how to open and close it. */
 export function DrawerProvider({ children }: { children: ReactNode }) {
   const [target, setTarget] = useState<DrawerTarget>(null)
   const openDay = useCallback((day: number) => setTarget({ kind: 'day', day }), [])

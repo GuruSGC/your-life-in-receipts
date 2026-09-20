@@ -30,6 +30,7 @@ export interface Decoded {
   extra: Record<string, number>
 }
 
+/** Validates the compiled listening file and turns each session into a receipt. */
 export function decodeMusic(raw: unknown): Decoded {
   const file = recordOf(raw, 'music')
   const stats = recordOf(file.stats, 'stats')
@@ -122,6 +123,7 @@ export function decodeMusic(raw: unknown): Decoded {
 
 const DIRECTIONS: ('out' | 'in' | 'transfer')[] = ['out', 'in', 'transfer']
 
+/** Chooses the theme of a household ledger entry from its category and subcategory. */
 export function ledgerTheme(category: string, subcategory: string): Theme {
   const key = category.toLowerCase()
   if (LEDGER_THEME[key]) return LEDGER_THEME[key]
@@ -130,6 +132,7 @@ export function ledgerTheme(category: string, subcategory: string): Theme {
   return 'other'
 }
 
+/** Validates the compiled household ledger and turns each entry into a receipt. */
 export function decodeLedger(raw: unknown): Decoded {
   const file = recordOf(raw, 'ledger')
   const stats = recordOf(file.stats, 'stats')
@@ -173,6 +176,7 @@ export function decodeLedger(raw: unknown): Decoded {
   }
 }
 
+/** Validates the compiled card statement and turns each transaction into a receipt. */
 export function decodeCard(raw: unknown): Decoded {
   const file = recordOf(raw, 'card')
   const stats = recordOf(file.stats, 'stats')
@@ -226,6 +230,7 @@ export function decodeCard(raw: unknown): Decoded {
   }
 }
 
+/** Groups receipts by the day they were recorded on. */
 export function indexByDay(receipts: Receipt[]): Map<number, Receipt[]> {
   const byDay = new Map<number, Receipt[]>()
   for (const receipt of receipts) {
@@ -248,6 +253,7 @@ export function withReceipts(life: LifeData, receipts: Receipt[]): LifeData {
   return { ...life, complete: true, receipts, byDay: indexByDay(receipts) }
 }
 
+/** Joins the three decoded sources into one life, with totals, coverage and a day index. */
 export function assemble(music: Decoded, ledger: Decoded, card: Decoded): LifeData {
   if (!music.music) throw new Error('Music aggregates are missing')
   const receipts = [...music.receipts, ...ledger.receipts, ...card.receipts].sort(

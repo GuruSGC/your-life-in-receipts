@@ -10,6 +10,7 @@ export function readJson<T>(key: string, isValid: (value: unknown) => value is T
   }
 }
 
+/** Saves a value to localStorage, ignoring storage that is full or blocked. */
 export function writeJson(key: string, value: unknown): void {
   try {
     localStorage.setItem(key, JSON.stringify(value))

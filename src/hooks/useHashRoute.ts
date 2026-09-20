@@ -1,6 +1,7 @@
 import { useCallback, useSyncExternalStore } from 'react'
 import { flushSync } from 'react-dom'
 
+/** The pages of the app, their paths and labels. */
 export const ROUTES = [
   { id: 'receipt', path: '/', label: 'Receipt' },
   { id: 'story', path: '/story', label: 'Story' },
@@ -17,6 +18,7 @@ export interface ParsedHash {
   params: URLSearchParams
 }
 
+/** Turns a URL hash into a route and its query parameters, falling back to the home page. */
 export function parseHash(hash: string): ParsedHash {
   const [pathPart = '', query = ''] = hash.replace(/^#/, '').split('?')
   const path = pathPart === '' ? '/' : pathPart
@@ -46,6 +48,7 @@ function subscribe(callback: () => void): () => void {
 const snapshot = (): string => window.location.hash
 const serverSnapshot = (): string => ''
 
+/** The current route and query from the URL hash, with a navigate function. */
 export function useHashRoute(): ParsedHash & { navigate: (path: string) => void; hash: string } {
   const hash = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
   const navigate = useCallback((path: string) => {

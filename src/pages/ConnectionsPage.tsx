@@ -92,6 +92,7 @@ function Explorer({ links }: { links: Link[] }) {
   )
 }
 
+/** Page: artists and kinds of spending that keep landing on the same days. */
 export default function ConnectionsPage() {
   return (
     <DataGate>

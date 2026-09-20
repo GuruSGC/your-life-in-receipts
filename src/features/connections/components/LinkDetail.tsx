@@ -24,6 +24,7 @@ function RateBar({ label, ratio, strong }: { label: string; ratio: number; stron
   )
 }
 
+/** Explains one connection: its lift, the two rates it compares, and the days behind it. */
 export function LinkDetail({ link }: { link: Link }) {
   const { openDay } = useDrawer()
   const theme = THEME_LABELS[link.theme].toLowerCase()

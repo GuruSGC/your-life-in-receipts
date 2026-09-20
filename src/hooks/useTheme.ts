@@ -21,6 +21,7 @@ export function applyInitialTheme(): ThemeChoice {
   return theme
 }
 
+/** The current theme and a function that toggles it, remembering the choice. */
 export function useTheme(): { theme: ThemeChoice; toggle: () => void } {
   const [theme, setTheme] = useState<ThemeChoice>(() =>
     isChoice(document.documentElement.dataset.theme)

@@ -71,6 +71,7 @@ function Stat({ label, value, index }: { label: string; value: string; index: nu
   )
 }
 
+/** One chapter of the story: its numbers, chart, a day that shows it, and its findings. */
 export function ChapterView({ life, story, chapter, onStep }: Props) {
   const { openDay } = useDrawer()
   const heading = useRef<HTMLHeadingElement>(null)

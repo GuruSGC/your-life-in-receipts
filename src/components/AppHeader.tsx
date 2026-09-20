@@ -47,6 +47,7 @@ function NavLink({ id, path, label, current, stacked = false }: LinkProps) {
   )
 }
 
+/** The top navigation on desktop and the bottom navigation on phones, with the theme toggle. */
 export function AppHeader({ current }: { current: RouteId }) {
   const items = ROUTES.filter((route) => route.id !== 'method')
   return (

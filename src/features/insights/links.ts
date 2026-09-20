@@ -85,6 +85,7 @@ function linksIn(window: Window, facts: Map<number, DayFacts>, artists: string[]
 
 const strength = (link: Link): number => Math.abs(Math.log(link.lift)) * Math.sqrt(link.bothDays)
 
+/** Finds artists and kinds of spending that share days more or less often than chance. */
 export function findLinks(life: LifeData, facts: Map<number, DayFacts>): Link[] {
   const artists = life.music.topArtists.slice(0, TOP_ARTISTS).map((artist) => artist.name)
   const windows: Window[] = [

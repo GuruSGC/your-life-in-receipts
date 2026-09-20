@@ -19,6 +19,7 @@ const topDays = (
 const listens = (life: LifeData): Receipt[] =>
   life.receipts.filter((receipt) => receipt.kind === 'listen')
 
+/** Finding: how much of the listening happens late at night. */
 export function nightOwl(life: LifeData, facts: Map<number, DayFacts>): Insight {
   const night = sum(listens(life).map((receipt) => receipt.nightPlays ?? 0))
   const share = night / life.totals.plays
@@ -37,6 +38,7 @@ export function nightOwl(life: LifeData, facts: Map<number, DayFacts>): Insight 
   }
 }
 
+/** Finding: the artist and the songs that keep coming back. */
 export function comfortLoop(life: LifeData, facts: Map<number, DayFacts>): Insight {
   const top = life.music.topArtists[0]
   const name = top?.name ?? 'One artist'
@@ -58,6 +60,7 @@ export function comfortLoop(life: LifeData, facts: Map<number, DayFacts>): Insig
   }
 }
 
+/** Finding: the loudest year of listening. */
 export function peakYear(life: LifeData, facts: Map<number, DayFacts>): Insight {
   const years = Object.entries(life.music.playsByYear).map(([year, plays]) => ({
     year: Number(year),
@@ -89,6 +92,7 @@ export function peakYear(life: LifeData, facts: Map<number, DayFacts>): Insight 
   }
 }
 
+/** Finding: the year the forward button was used most. */
 export function restlessYear(life: LifeData): Insight | null {
   const rows = Object.entries(life.music.playsByYear)
     .map(([year, plays]) => ({
@@ -119,6 +123,7 @@ export function restlessYear(life: LifeData): Insight | null {
   }
 }
 
+/** Finding: how the pace of discovering new artists changed. */
 export function explorerToLoyalist(life: LifeData, facts: Map<number, DayFacts>): Insight | null {
   const years = Object.entries(life.music.newArtistsByYear).map(([year, count]) => ({
     year: Number(year),
@@ -144,6 +149,7 @@ export function explorerToLoyalist(life: LifeData, facts: Map<number, DayFacts>)
   }
 }
 
+/** Finding: the longest unbroken run of listening days. */
 export function streaks(
   life: LifeData,
   facts: Map<number, DayFacts>,

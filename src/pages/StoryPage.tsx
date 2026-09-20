@@ -3,6 +3,7 @@ import { ChapterView } from '@/features/story/components/ChapterView'
 import { DataGate } from '@/components/DataGate'
 import { useHashRoute } from '@/hooks/useHashRoute'
 
+/** Page: the story, one chapter at a time. */
 export default function StoryPage() {
   const { params, navigate } = useHashRoute()
   const requested = Number(params.get('chapter') ?? '1')

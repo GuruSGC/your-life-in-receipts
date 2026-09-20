@@ -23,6 +23,7 @@ function tallyThemes(rows: Receipt[]): { amounts: Map<Theme, number>; counts: Ma
   return { amounts, counts }
 }
 
+/** Finding: which kind of everyday spending dominates the ledger. */
 export function spendingIdentity(life: LifeData): Insight | null {
   const rows = ledgerOut(life)
   const everyday = rows.filter((row) => row.theme !== 'money')
@@ -62,6 +63,7 @@ function correlationSentence(r: number): string {
   return 'The two run mostly independently.'
 }
 
+/** Finding: how monthly listening and monthly spending move together. */
 export function listeningAndSpending(
   months: MonthRow[],
   facts: Map<number, DayFacts>,
@@ -89,6 +91,7 @@ export function listeningAndSpending(
   }
 }
 
+/** Finding: the strongest artist and spending connection. */
 export function strongestLink(links: Link[]): Insight | null {
   const link = links.find((item) => item.lift > 1) ?? links[0]
   if (!link) return null
@@ -104,6 +107,7 @@ export function strongestLink(links: Link[]): Insight | null {
   }
 }
 
+/** Finding: how many places the card statement names. */
 export function cardPlaces(life: LifeData): Insight | null {
   const rows = cardDated(life)
   const placed = rows.filter((row) => row.place?.includes(', '))
@@ -125,6 +129,7 @@ export function cardPlaces(life: LifeData): Insight | null {
   }
 }
 
+/** Finding: what was merged, left out or undated in the raw data. */
 export function dataHonesty(life: LifeData): Insight {
   const card = life.quality[2]
   const drawer = life.receipts.filter((receipt) => receipt.min === null).length
@@ -139,6 +144,7 @@ export function dataHonesty(life: LifeData): Insight {
   }
 }
 
+/** The date of the first dated receipt, as text. */
 export function firstMoment(life: LifeData): string {
   const first = life.receipts.find((receipt) => receipt.min !== null)
   return first?.min === null || !first ? '' : formatDay(dayOf(first.min ?? 0))

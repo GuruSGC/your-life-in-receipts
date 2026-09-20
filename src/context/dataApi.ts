@@ -12,6 +12,7 @@ export interface DataApi {
   reload: () => void
 }
 
+/** React context carrying the loaded data and a reload function. */
 export const DataContext = createContext<DataApi | null>(null)
 
 /** Returns the loaded data, or null while it is loading or after it failed. */
@@ -20,6 +21,7 @@ export function useReady(): { life: LifeData; story: Story } | null {
   return state.status === 'ready' ? { life: state.life, story: state.story } : null
 }
 
+/** Reads the data context; throws if used outside the provider. */
 export function useData(): DataApi {
   const value = useContext(DataContext)
   if (!value) throw new Error('useData must be used inside DataProvider')

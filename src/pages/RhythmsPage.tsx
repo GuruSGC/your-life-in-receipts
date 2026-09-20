@@ -4,6 +4,7 @@ import { MonthlyJourney } from '@/features/rhythms/components/MonthlyJourney'
 import { DataGate } from '@/components/DataGate'
 import { PageTitle } from '@/components/PageTitle'
 
+/** Page: the weekly heatmap, who filled each year, and listening against spending. */
 export default function RhythmsPage() {
   return (
     <DataGate>

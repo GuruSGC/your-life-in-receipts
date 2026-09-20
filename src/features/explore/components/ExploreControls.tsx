@@ -23,6 +23,7 @@ interface Props {
   onReset: () => void
 }
 
+/** Search box, kind chips, theme, year range and order for the Explore page. */
 export function ExploreControls({ filters, years, onChange, onReset }: Props) {
   const set = <K extends keyof Filters>(key: K, value: Filters[K]): void =>
     onChange({ ...filters, [key]: value })
