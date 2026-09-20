@@ -49,3 +49,4 @@ export function buildStory(life: LifeData): StoryWithFacts {
   ].filter((insight): insight is Insight => insight !== null)
   return { months, facts, chapters, insights, links }
 }
+export * from './epilogue'

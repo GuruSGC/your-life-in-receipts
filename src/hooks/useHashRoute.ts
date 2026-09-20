@@ -16,6 +16,16 @@ export function parseHash(hash: string): ParsedHash {
 }
 
 /**
+ * Turns a plain address such as /story?chapter=3 into its hash form, so a link typed without the hash still opens the
+ * right page. Nothing happens for the home page or an unknown path.
+ */
+export function redirectPathToHash(location: Location = window.location): void {
+  const known = ROUTES.some((route) => route.path === location.pathname && route.path !== '/')
+  if (!known || location.hash) return
+  window.history.replaceState(null, '', `/#${location.pathname}${location.search}`)
+}
+
+/**
  * Route changes cross-fade with the View Transitions API where the browser has it and the reader has not asked
  * for reduced motion. Elsewhere the page simply changes.
  */

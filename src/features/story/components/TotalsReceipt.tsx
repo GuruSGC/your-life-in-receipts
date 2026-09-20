@@ -1,21 +1,10 @@
 import type { CSSProperties } from 'react'
 import type { LifeData } from '@/types'
-import { formatDuration, formatNumber } from '@/utils/format'
-import { dayOf, formatDay } from '@/utils/time'
+import { receiptTotal, totalsLines } from '@/utils/receipt'
 
 /** The whole dataset as one printed receipt. */
 export function TotalsReceipt({ life }: { life: LifeData }) {
-  const lines: [string, string][] = [
-    ['First receipt', formatDay(dayOf(life.range.startMin))],
-    ['Last receipt', formatDay(dayOf(life.range.endMin))],
-    ['Songs played', formatNumber(life.totals.plays)],
-    ['Time listening', formatDuration(life.totals.listenedMinutes)],
-    ['Different artists', formatNumber(life.totals.artists)],
-    ['Listening sessions', formatNumber(life.totals.sessions)],
-    ['Household entries', formatNumber(life.totals.ledgerReceipts)],
-    ['Card receipts', formatNumber(life.totals.cardReceipts)],
-    ['In the drawer, no date', formatNumber(life.totals.undated)],
-  ]
+  const lines = totalsLines(life)
   return (
     <div>
       <div className="printer" aria-hidden="true" />
@@ -37,9 +26,7 @@ export function TotalsReceipt({ life }: { life: LifeData }) {
         <div className="mt-4 border-t-2 border-dashed border-line-strong pt-3">
           <p className="leader font-semibold">
             <span>Receipts in total</span>
-            <span className="mono">
-              {formatNumber(life.totals.sessions + life.totals.spendReceipts)}
-            </span>
+            <span className="mono">{receiptTotal(life)}</span>
           </p>
         </div>
       </section>

@@ -15,7 +15,7 @@ export default defineConfig({
     rolldownOptions: {
       output: {
         advancedChunks: {
-          groups: [{ name: 'react', test: /node_modules[\/](react|react-dom|scheduler)[\/]/ }],
+          groups: [{ name: 'react', test: /node_modules\/(?:react|react-dom|scheduler)\// }],
         },
       },
     },

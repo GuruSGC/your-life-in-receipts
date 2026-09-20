@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import type { LifeData } from '@/types'
 import type { Story } from '@/types'
 import { InsightCard } from '@/features/story/components/InsightCard'
+import { SaveReceiptButton } from '@/features/story/components/SaveReceiptButton'
 import { SurpriseButton } from '@/features/story/components/SurpriseButton'
 import { JourneyStrip } from '@/features/story/components/JourneyStrip'
 import { TotalsReceipt } from '@/features/story/components/TotalsReceipt'
@@ -12,6 +13,28 @@ import { PageTitle } from '@/components/PageTitle'
 import { formatNumber } from '@/utils/format'
 
 const printReceipt = (): void => window.print()
+const QUESTIONS = [
+  {
+    question: 'What kind of person was this, and when?',
+    where: 'The seven chapters, each named for a trait',
+    href: '#/story',
+  },
+  {
+    question: 'Does the spending follow the music?',
+    where: 'Artists and kinds of spending that share days',
+    href: '#/connections',
+  },
+  {
+    question: 'When does the listening change?',
+    where: 'The rhythms: hours, weekdays and months',
+    href: '#/rhythms',
+  },
+  {
+    question: 'What did one whole day look like?',
+    where: 'A random day, music and money side by side',
+    href: '#/explore',
+  },
+] as const
 const HIGHLIGHTS = ['night-owl', 'peak-year', 'top-link']
 
 /** Page: the whole life as one receipt, the findings easiest to miss, and the journey. */
@@ -55,7 +78,12 @@ function HomeBody({ life, story }: { life: LifeData; story: Story }) {
         purchases add up to a life.
       </p>
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-8">
-        <TotalsReceipt life={life} />
+        <div>
+          <TotalsReceipt life={life} />
+          <div className="no-print mt-4">
+            <SaveReceiptButton life={life} />
+          </div>
+        </div>
         <section aria-labelledby="missed-title">
           <h2 id="missed-title" className="mb-3 text-xl">
             Three things easy to miss
@@ -67,6 +95,25 @@ function HomeBody({ life, story }: { life: LifeData; story: Story }) {
           </div>
         </section>
       </div>
+
+      <section className="mt-10" aria-labelledby="questions-title">
+        <h2 id="questions-title" className="text-xl">
+          Questions the receipts can answer
+        </h2>
+        <ul className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {QUESTIONS.map((item) => (
+            <li key={item.href}>
+              <a
+                href={item.href}
+                className="paper block h-full p-4 transition-colors hover:border-accent hover:bg-accent-soft"
+              >
+                <span className="block font-semibold">{item.question}</span>
+                <span className="mt-1 block text-sm text-ink-2">{item.where}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="paper defer-render mt-10 p-5 md:p-6" aria-labelledby="journey-title">
         <h2 id="journey-title" className="text-xl">

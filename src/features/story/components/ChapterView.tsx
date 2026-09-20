@@ -10,6 +10,7 @@ import { useDrawer } from '@/context/drawerApi'
 import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/utils/format'
 import { dayOf, formatDay } from '@/utils/time'
 import { ChapterBars } from './ChapterBars'
+import { Epilogue } from './Epilogue'
 import { InsightCard } from './InsightCard'
 
 interface Props {
@@ -171,6 +172,8 @@ export function ChapterView({ life, story, chapter, onStep }: Props) {
           </div>
         </section>
       ) : null}
+
+      {chapter.index === total ? <Epilogue story={story} /> : null}
 
       <nav aria-label="Chapters" className="mt-10 flex gap-3">
         <ValueButton
