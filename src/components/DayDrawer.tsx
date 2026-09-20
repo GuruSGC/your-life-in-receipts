@@ -6,6 +6,7 @@ import { useDrawer, type DrawerTarget } from '@/context/drawerApi'
 import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/utils/format'
 import { formatDay, formatWeekday } from '@/utils/time'
+import { MomentChain } from '@/features/story/components/MomentChain'
 import { ReceiptRow } from './ReceiptRow'
 
 const SEARCH_LIMIT_DAYS = 400
@@ -63,6 +64,7 @@ function DayContent({
       <p className="mono mt-1 text-xs text-ink-3">
         {formatNumber(receipts.length)} receipts, times as recorded
       </p>
+      <MomentChain receipts={receipts} />
       <ul className="mt-4 divide-y divide-line">
         {receipts.slice(0, 60).map((receipt, index) => (
           <ReceiptRow
