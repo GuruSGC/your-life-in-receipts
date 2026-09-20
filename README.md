@@ -102,7 +102,7 @@ src/
   utils/                    Time and number formatting
   constants/                Themes, labels, storage keys
   types/                    Shared domain types in one place
-  styles/                   Tokens, base, components, motion
+  index.css                 Tokens, base, components, motion (one stylesheet)
 scripts/                    Data build and the verification scripts
 tests/                      Unit, integration and independent-recomputation tests
 ```
