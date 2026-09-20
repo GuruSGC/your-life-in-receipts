@@ -23,7 +23,10 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-explicit-any': 'error',
       'no-console': ['error', { allow: ['error', 'warn'] }],
-      complexity: ['error', 20],
+      complexity: ['error', 10],
+      'max-lines-per-function': ['error', { max: 150, skipBlankLines: true, skipComments: true, IIFEs: true }],
+      'max-params': ['error', 5],
+      'max-depth': ['error', 3],
       'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
       // Template strings that embed other template strings read fine for UI copy; the real risk is deep nesting.
       'sonarjs/no-nested-template-literals': 'off',

@@ -111,6 +111,9 @@ export function pickPersona(t: Traits, base: Traits, lead: string, avoid = ''): 
   return ranked[0]?.[0] ?? 'The Steady Rhythm'
 }
 
+const within = (min: number | null, first: number, last: number): boolean =>
+  min !== null && min >= first && min < last
+
 function tallyLeads(
   life: LifeData,
   first: number,
@@ -118,10 +121,9 @@ function tallyLeads(
   seen: Set<string>,
 ): { lead: string; leadPlays: number; newLeads: number } {
   const leads = new Map<string, number>()
+  const listens = life.receipts.filter((r) => r.kind === 'listen' && within(r.min, first, last))
   let newLeads = 0
-  for (const receipt of life.receipts) {
-    if (receipt.kind !== 'listen' || receipt.min === null) continue
-    if (receipt.min < first || receipt.min >= last) continue
+  for (const receipt of listens) {
     const lead = receipt.artists?.[0]
     if (!lead) continue
     leads.set(lead, (leads.get(lead) ?? 0) + (receipt.plays ?? 1))
@@ -175,20 +177,18 @@ function spendTheme(
   startMin: number,
   endMin: number,
 ): { theme: Theme | null; share: number; spend: number } {
+  const spent = life.receipts.filter(
+    (r) =>
+      r.kind !== 'listen' &&
+      within(r.min, startMin, endMin) &&
+      r.direction === 'out' &&
+      r.theme !== 'money',
+  )
   const totals = new Map<Theme, number>()
-  let spend = 0
-  for (const receipt of life.receipts) {
-    if (
-      receipt.kind === 'listen' ||
-      receipt.min === null ||
-      receipt.min < startMin ||
-      receipt.min >= endMin
-    )
-      continue
-    if (receipt.direction !== 'out' || receipt.theme === 'money') continue
+  for (const receipt of spent) {
     totals.set(receipt.theme, (totals.get(receipt.theme) ?? 0) + (receipt.amount ?? 0))
-    spend += receipt.amount ?? 0
   }
+  const spend = spent.reduce((sum, receipt) => sum + (receipt.amount ?? 0), 0)
   const top = [...totals].filter(([theme]) => theme !== 'other').sort((a, b) => b[1] - a[1])[0]
   return { theme: top?.[0] ?? null, share: top && spend ? top[1] / spend : 0, spend }
 }

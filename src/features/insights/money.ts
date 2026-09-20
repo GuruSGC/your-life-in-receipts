@@ -10,32 +10,41 @@ const ledgerOut = (life: LifeData): Receipt[] =>
 const cardDated = (life: LifeData): Receipt[] =>
   life.receipts.filter((receipt) => receipt.kind === 'card' && receipt.min !== null)
 
+const topOf = (totals: Map<Theme, number>): [Theme, number] | undefined =>
+  [...totals].filter(([key]) => key !== 'other').sort((a, b) => b[1] - a[1])[0]
+
+function tallyThemes(rows: Receipt[]): { amounts: Map<Theme, number>; counts: Map<Theme, number> } {
+  const amounts = new Map<Theme, number>()
+  const counts = new Map<Theme, number>()
+  for (const receipt of rows) {
+    amounts.set(receipt.theme, (amounts.get(receipt.theme) ?? 0) + (receipt.amount ?? 0))
+    counts.set(receipt.theme, (counts.get(receipt.theme) ?? 0) + 1)
+  }
+  return { amounts, counts }
+}
+
 export function spendingIdentity(life: LifeData): Insight | null {
   const rows = ledgerOut(life)
   const everyday = rows.filter((row) => row.theme !== 'money')
-  const totals = new Map<Theme, number>()
-  const counts = new Map<Theme, number>()
-  for (const receipt of everyday) {
-    totals.set(receipt.theme, (totals.get(receipt.theme) ?? 0) + (receipt.amount ?? 0))
-    counts.set(receipt.theme, (counts.get(receipt.theme) ?? 0) + 1)
-  }
-  const ranked = [...totals].filter(([key]) => key !== 'other').sort((a, b) => b[1] - a[1])
-  const [theme, amount] = ranked[0] ?? []
-  if (!theme || amount === undefined) return null
+  const { amounts, counts } = tallyThemes(everyday)
+  const top = topOf(amounts)
+  if (!top) return null
+  const [theme, amount] = top
   const overall = sum(everyday.map((row) => row.amount ?? 0))
   const moved = sum(rows.filter((row) => row.theme === 'money').map((row) => row.amount ?? 0))
-  const frequent = [...counts].filter(([key]) => key !== 'other').sort((a, b) => b[1] - a[1])[0]
+  const frequent = topOf(counts)
   const themeRows = everyday.filter((row) => row.theme === theme)
   const biggest = themeRows.reduce(
     (best, row) => ((row.amount ?? 0) > (best.amount ?? 0) ? row : best),
     themeRows[0] as Receipt,
   )
   const label = THEME_LABELS[theme].toLowerCase()
+  const byCount = frequent ? THEME_LABELS[frequent[0]].toLowerCase() : 'small purchases'
   return {
     id: 'money-identity',
     group: 'money',
     headline: `Everyday money goes to ${label}`,
-    body: `${THEME_LABELS[theme]} takes ${formatPercent(amount / overall)} of the ${formatRupees(overall)} spent on everyday life in the household ledger. By count, ${frequent ? THEME_LABELS[frequent[0]].toLowerCase() : 'small purchases'} wins with ${formatNumber(frequent?.[1] ?? 0)} entries. A further ${formatRupees(moved)} moved through savings, investments and transfers and is not counted as spending.`,
+    body: `${THEME_LABELS[theme]} takes ${formatPercent(amount / overall)} of the ${formatRupees(overall)} spent on everyday life in the household ledger. By count, ${byCount} wins with ${formatNumber(frequent?.[1] ?? 0)} entries. A further ${formatRupees(moved)} moved through savings, investments and transfers and is not counted as spending.`,
     stat: formatPercent(amount / overall),
     statLabel: `of everyday spending was ${label}`,
     evidenceDays: biggest?.min == null ? [] : [dayOf(biggest.min)],

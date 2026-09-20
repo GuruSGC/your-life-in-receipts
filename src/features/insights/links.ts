@@ -39,14 +39,16 @@ function indexDays(window: Window, facts: Map<number, DayFacts>, artists: string
   return { themeDays, artistDays }
 }
 
-function scorePair(
-  window: Window,
-  total: number,
-  theme: Theme,
-  days: number[],
-  artist: string,
-  played: Set<number>,
-): Link | null {
+interface Pair {
+  window: Window
+  total: number
+  theme: Theme
+  days: number[]
+  artist: string
+  played: Set<number>
+}
+
+function scorePair({ window, total, theme, days, artist, played }: Pair): Link | null {
   const both = days.filter((day) => played.has(day))
   const baseRate = played.size / total
   if (both.length < MIN_BOTH_DAYS || baseRate === 0) return null
@@ -74,7 +76,7 @@ function linksIn(window: Window, facts: Map<number, DayFacts>, artists: string[]
   for (const [theme, days] of themeDays) {
     if (days.length < MIN_THEME_DAYS) continue
     for (const [artist, played] of artistDays) {
-      const link = scorePair(window, total, theme, days, artist, played)
+      const link = scorePair({ window, total, theme, days, artist, played })
       if (link) links.push(link)
     }
   }
