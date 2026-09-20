@@ -20,11 +20,23 @@ function Shell() {
   const Page = PAGES[route]
   return (
     <>
-      <a href="#main" className="skip-link">
+      <a
+        href="#main"
+        className="skip-link"
+        onClick={(event) => {
+          // The hash belongs to the router, so move focus instead of letting the link change the route.
+          event.preventDefault()
+          document.getElementById('main')?.focus()
+        }}
+      >
         Skip to content
       </a>
       <AppHeader current={route} />
-      <main id="main" className="mx-auto max-w-6xl px-4 pb-28 pt-6 md:px-6 md:pb-14 md:pt-10">
+      <main
+        id="main"
+        tabIndex={-1}
+        className="min-h-[100dvh] outline-none mx-auto max-w-6xl px-4 pb-28 pt-6 md:px-6 md:pb-14 md:pt-10"
+      >
         <Suspense
           fallback={
             <p role="status" className="mono text-sm text-ink-3">

@@ -1,17 +1,10 @@
-import { useEffect, useRef, type ReactNode } from 'react'
-
-let firstRender = true
+import { useRef, type ReactNode } from 'react'
+import { useFocusHeading } from '@/shared/hooks/useFocusHeading'
 
 /** The page's one h1. After the first render it takes focus so route changes are announced and keyboard users start at the top. */
 export function PageTitle({ children, kicker }: { children: ReactNode; kicker?: string }) {
   const ref = useRef<HTMLHeadingElement>(null)
-  useEffect(() => {
-    if (firstRender) {
-      firstRender = false
-      return
-    }
-    ref.current?.focus({ preventScroll: true })
-  }, [])
+  useFocusHeading(ref, 'page')
   return (
     <header className="mb-6 md:mb-8">
       {kicker ? (
