@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import type { LifeData, Receipt } from '@/features/data'
 import { useReady } from '@/context/dataApi'
 import { useDrawer, type DrawerTarget } from '@/context/drawerApi'
+import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/utils/format'
 import { formatDay, formatWeekday } from '@/utils/time'
 import { ReceiptRow } from './ReceiptRow'
@@ -49,6 +50,7 @@ function DayContent({
   onDay: (day: number) => void
 }) {
   const receipts = life.byDay.get(day) ?? []
+  const { pinned, toggle } = usePins()
   const before = neighbour(life, day, -1)
   const after = neighbour(life, day, 1)
   return (
@@ -63,7 +65,13 @@ function DayContent({
       </p>
       <ul className="mt-4 divide-y divide-line">
         {receipts.slice(0, 60).map((receipt, index) => (
-          <ReceiptRow key={receipt.id} receipt={receipt} index={index} />
+          <ReceiptRow
+            key={receipt.id}
+            receipt={receipt}
+            index={index}
+            pinned={pinned.has(receipt.id)}
+            onPin={toggle}
+          />
         ))}
       </ul>
       {receipts.length > 60 ? (

@@ -1,5 +1,6 @@
 import { DataProvider } from '@/context/DataContext'
 import { DrawerProvider } from '@/context/DrawerContext'
+import { PinsProvider } from '@/context/PinsContext'
 import { AppLayout } from '@/layouts'
 import { ErrorBoundary } from './ErrorBoundary'
 
@@ -9,7 +10,9 @@ export default function App() {
     <ErrorBoundary>
       <DataProvider>
         <DrawerProvider>
-          <AppLayout />
+          <PinsProvider>
+            <AppLayout />
+          </PinsProvider>
         </DrawerProvider>
       </DataProvider>
     </ErrorBoundary>

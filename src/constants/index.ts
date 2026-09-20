@@ -1,5 +1,7 @@
 /** The localStorage key that remembers the chosen theme. */
 export const STORAGE_THEME_KEY = 'life-receipts:theme:v1'
+/** The localStorage key that remembers the pinned receipts. */
+export const STORAGE_PINS_KEY = 'life-receipts:pins:v1'
 /** Where the compiled data files are served from. */
 export const DATA_BASE_PATH = '/data'
 /** Minutes in a day, used to turn minute timestamps into day numbers. */

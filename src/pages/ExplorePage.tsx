@@ -1,4 +1,5 @@
-import { useCallback, useDeferredValue, useMemo, useState } from 'react'
+import { useCallback, useDeferredValue, useEffect, useMemo, useState } from 'react'
+import { filtersFromParams, paramsFromFilters } from '@/features/explore/utils/urlState'
 import type { Receipt } from '@/features/data'
 import { ExploreControls } from '@/features/explore/components/ExploreControls'
 import {
@@ -11,6 +12,7 @@ import { DataGate } from '@/components/DataGate'
 import { PageTitle } from '@/components/PageTitle'
 import { ReceiptRow } from '@/components/ReceiptRow'
 import { useDrawer } from '@/context/drawerApi'
+import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees } from '@/utils/format'
 import { dayOf, yearOf } from '@/utils/time'
 import type { LifeData } from '@/features/data'
@@ -18,7 +20,15 @@ import type { LifeData } from '@/features/data'
 const PAGE_SIZE = 60
 
 function Results({ life }: { life: LifeData }) {
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
+  const [filters, setFilters] = useState<Filters>(() =>
+    filtersFromParams(new URLSearchParams(window.location.hash.split('?')[1] ?? '')),
+  )
+  // Keep the address in step with the search, so a search can be shared. replaceState adds no history entries.
+  useEffect(() => {
+    const query = paramsFromFilters(filters)
+    const next = `#/explore${query ? `?${query}` : ''}`
+    if (window.location.hash !== next) window.history.replaceState(null, '', next)
+  }, [filters])
   const [shown, setShown] = useState(PAGE_SIZE)
   const { openDay, openReceipt } = useDrawer()
   const deferredQuery = useDeferredValue(filters.query)
@@ -26,10 +36,13 @@ function Results({ life }: { life: LifeData }) {
     const from = yearOf(life.range.startMin)
     return Array.from({ length: yearOf(life.range.endMin) - from + 1 }, (_, index) => from + index)
   }, [life])
-  const found = useMemo(
-    () => filterReceipts(life.receipts, { ...filters, query: deferredQuery }),
-    [life, filters, deferredQuery],
-  )
+  const { pinned, toggle } = usePins()
+  const found = useMemo(() => {
+    const source = filters.pinnedOnly
+      ? life.receipts.filter((receipt) => pinned.has(receipt.id))
+      : life.receipts
+    return filterReceipts(source, { ...filters, query: deferredQuery })
+  }, [life, filters, deferredQuery, pinned])
   const totals = useMemo(() => summarise(found), [found])
   const change = useCallback((next: Filters) => {
     setFilters(next)
@@ -44,7 +57,13 @@ function Results({ life }: { life: LifeData }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-8">
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <ExploreControls filters={filters} years={years} onChange={change} onReset={reset} />
+        <ExploreControls
+          filters={filters}
+          years={years}
+          onChange={change}
+          onReset={reset}
+          pinnedCount={pinned.size}
+        />
       </div>
       <section aria-labelledby="results-title">
         <h2 id="results-title" className="sr-only">
@@ -75,6 +94,8 @@ function Results({ life }: { life: LifeData }) {
                   index={index % PAGE_SIZE}
                   onOpen={open}
                   showDate
+                  pinned={pinned.has(receipt.id)}
+                  onPin={toggle}
                 />
               ))}
             </ul>

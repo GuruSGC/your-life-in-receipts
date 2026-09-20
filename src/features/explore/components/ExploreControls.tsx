@@ -21,10 +21,43 @@ interface Props {
   years: number[]
   onChange: (next: Filters) => void
   onReset: () => void
+  /** How many receipts are pinned to the scrapbook. */
+  pinnedCount?: number
+}
+
+interface SelectFieldProps {
+  id: string
+  label: string
+  value: string
+  options: { value: string; label: string }[]
+  onChange: (value: string) => void
+}
+
+/** A labelled dropdown. */
+function SelectField({ id, label, value, options, onChange }: SelectFieldProps) {
+  return (
+    <div>
+      <label htmlFor={id} className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
+        {label}
+      </label>
+      <select
+        id={id}
+        className="field mt-1 w-full"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
 }
 
 /** Search box, kind chips, theme, year range and order for the Explore page. */
-export function ExploreControls({ filters, years, onChange, onReset }: Props) {
+export function ExploreControls({ filters, years, onChange, onReset, pinnedCount = 0 }: Props) {
   const set = <K extends keyof Filters>(key: K, value: Filters[K]): void =>
     onChange({ ...filters, [key]: value })
   const toggleKind = (kind: ReceiptKind): void => {
@@ -85,84 +118,54 @@ export function ExploreControls({ filters, years, onChange, onReset }: Props) {
           >
             Include the drawer (no date)
           </button>
+          <button
+            type="button"
+            className="chip"
+            aria-pressed={filters.pinnedOnly}
+            onClick={() => set('pinnedOnly', !filters.pinnedOnly)}
+          >
+            Scrapbook only ({pinnedCount})
+          </button>
         </div>
       </fieldset>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <div>
-          <label htmlFor="theme" className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
-            Theme
-          </label>
-          <select
-            id="theme"
-            className="field mt-1 w-full"
-            value={filters.theme}
-            onChange={(event) => set('theme', event.target.value as Filters['theme'])}
-          >
-            <option value="all">All themes</option>
-            {THEMES.map((theme) => (
-              <option key={theme} value={theme}>
-                {THEME_LABELS[theme]}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="from" className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
-            From year
-          </label>
-          <select
-            id="from"
-            className="field mt-1 w-full"
-            value={filters.yearFrom ?? ''}
-            onChange={(event) =>
-              set('yearFrom', event.target.value ? Number(event.target.value) : null)
-            }
-          >
-            <option value="">Any</option>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="to" className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
-            To year
-          </label>
-          <select
-            id="to"
-            className="field mt-1 w-full"
-            value={filters.yearTo ?? ''}
-            onChange={(event) =>
-              set('yearTo', event.target.value ? Number(event.target.value) : null)
-            }
-          >
-            <option value="">Any</option>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="sort" className="mono text-xs uppercase tracking-[0.14em] text-ink-2">
-            Order
-          </label>
-          <select
-            id="sort"
-            className="field mt-1 w-full"
-            value={filters.sort}
-            onChange={(event) => set('sort', event.target.value as SortKey)}
-          >
-            {SORTS.map((sort) => (
-              <option key={sort.id} value={sort.id}>
-                {sort.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SelectField
+          id="theme"
+          label="Theme"
+          value={filters.theme}
+          options={[
+            { value: 'all', label: 'All themes' },
+            ...THEMES.map((theme) => ({ value: theme, label: THEME_LABELS[theme] })),
+          ]}
+          onChange={(value) => set('theme', value as Filters['theme'])}
+        />
+        <SelectField
+          id="from"
+          label="From year"
+          value={String(filters.yearFrom ?? '')}
+          options={[
+            { value: '', label: 'Any' },
+            ...years.map((year) => ({ value: String(year), label: String(year) })),
+          ]}
+          onChange={(value) => set('yearFrom', value ? Number(value) : null)}
+        />
+        <SelectField
+          id="to"
+          label="To year"
+          value={String(filters.yearTo ?? '')}
+          options={[
+            { value: '', label: 'Any' },
+            ...years.map((year) => ({ value: String(year), label: String(year) })),
+          ]}
+          onChange={(value) => set('yearTo', value ? Number(value) : null)}
+        />
+        <SelectField
+          id="sort"
+          label="Order"
+          value={filters.sort}
+          options={SORTS.map((sort) => ({ value: sort.id, label: sort.label }))}
+          onChange={(value) => set('sort', value as SortKey)}
+        />
       </div>
       <button type="button" className="btn btn-ghost" onClick={onReset}>
         Clear filters

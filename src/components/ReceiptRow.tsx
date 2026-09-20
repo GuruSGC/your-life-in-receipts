@@ -1,3 +1,4 @@
+import { PushPin } from '@phosphor-icons/react'
 import { memo, type CSSProperties } from 'react'
 import type { Receipt } from '@/features/data'
 import { formatRupees } from '@/utils/format'
@@ -14,6 +15,9 @@ interface Props {
   index?: number
   onOpen?: (receipt: Receipt) => void
   showDate?: boolean
+  /** Whether the receipt is in the scrapbook. Only shown together with `onPin`. */
+  pinned?: boolean
+  onPin?: (receipt: Receipt) => void
 }
 
 function footnote(receipt: Receipt, showDate: boolean): string {
@@ -32,9 +36,8 @@ function footnote(receipt: Receipt, showDate: boolean): string {
   return parts.join(' · ')
 }
 
-/** One receipt as a printed line: what it was, when, and the amount when there is one. */
-function ReceiptRowBase({ receipt, index = 0, onOpen, showDate = false }: Props) {
-  const body = (
+function RowBody({ receipt, showDate }: { receipt: Receipt; showDate: boolean }) {
+  return (
     <>
       <span
         aria-hidden="true"
@@ -56,23 +59,39 @@ function ReceiptRowBase({ receipt, index = 0, onOpen, showDate = false }: Props)
       </span>
     </>
   )
+}
+
+/** One receipt as a printed line: what it was, when, the amount, and a pin for the scrapbook. */
+function ReceiptRowBase({ receipt, index = 0, onOpen, showDate = false, pinned, onPin }: Props) {
   const style = { '--i': Math.min(index, 12) } as CSSProperties
+  const body = <RowBody receipt={receipt} showDate={showDate} />
   return (
-    <li className="print" style={style}>
+    <li className="print flex items-start gap-1" style={style}>
       {onOpen ? (
         <button
           type="button"
           onClick={() => onOpen(receipt)}
-          className="flex min-h-11 w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-accent-soft"
+          className="flex min-h-11 min-w-0 flex-1 items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-accent-soft"
         >
           {body}
         </button>
       ) : (
-        <div className="flex items-start gap-3 px-3 py-2.5">{body}</div>
+        <div className="flex min-w-0 flex-1 items-start gap-3 px-3 py-2.5">{body}</div>
       )}
+      {onPin ? (
+        <button
+          type="button"
+          onClick={() => onPin(receipt)}
+          aria-pressed={pinned === true}
+          aria-label={`${pinned ? 'Remove from' : 'Pin to'} the scrapbook: ${receipt.title}`}
+          className="btn btn-ghost mt-1 size-11 shrink-0 !px-0"
+        >
+          <PushPin size={18} weight={pinned ? 'fill' : 'regular'} aria-hidden={true} />
+        </button>
+      ) : null}
     </li>
   )
 }
 
-/** A row is rebuilt only when its own receipt changes, which keeps long search results cheap to re-render. */
+/** A row is rebuilt only when its own receipt or pin state changes, which keeps long result lists cheap. */
 export const ReceiptRow = memo(ReceiptRowBase)

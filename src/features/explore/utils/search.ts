@@ -11,6 +11,7 @@ export interface Filters {
   yearFrom: number | null
   yearTo: number | null
   includeUndated: boolean
+  pinnedOnly: boolean
   sort: SortKey
 }
 
@@ -22,6 +23,7 @@ export const DEFAULT_FILTERS: Filters = {
   yearFrom: null,
   yearTo: null,
   includeUndated: true,
+  pinnedOnly: false,
   sort: 'newest',
 }
 
