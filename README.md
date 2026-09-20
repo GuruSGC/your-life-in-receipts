@@ -18,14 +18,14 @@ Nothing is invented. Every number is computed from the receipts, every finding l
 
 ## Features
 
-| Requirement in the brief | How it is met |
-| --- | --- |
-| Explore the receipts | **Explore** searches all 12,611 receipts at once, filters by kind, theme and years, sorts four ways, and opens any receipt onto the whole day around it |
-| Meaningful filtering, searching or navigation | Search terms all have to match; kind, theme and year filters combine; the count, the minutes of music and the money spent update as you type |
-| A way to discover relationships or patterns | **Connections** pairs artists with kinds of spending using how often they share a day compared with any day; **Rhythms** shows the weekly heatmap and listening against spending by month |
-| An interactive storytelling experience | **Story** walks through seven chapters found from the data, each with its own numbers, chart, a "day that shows it" and the findings that belong to it |
-| A clear visual representation of the journey | The journey strip on the home page: every month of listening as a bar, the chapters as bands, and the spans covered by the ledger and the card underneath |
-| Responsive design | Verified at nine widths from 320 px to 2560 px on every page, with a bottom navigation on phones |
+| Requirement in the brief                      | How it is met                                                                                                                                                                             |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Explore the receipts                          | **Explore** searches all 12,611 receipts at once, filters by kind, theme and years, sorts four ways, and opens any receipt onto the whole day around it                                   |
+| Meaningful filtering, searching or navigation | Search terms all have to match; kind, theme and year filters combine; the count, the minutes of music and the money spent update as you type                                              |
+| A way to discover relationships or patterns   | **Connections** pairs artists with kinds of spending using how often they share a day compared with any day; **Rhythms** shows the weekly heatmap and listening against spending by month |
+| An interactive storytelling experience        | **Story** walks through seven chapters found from the data, each with its own numbers, chart, a "day that shows it" and the findings that belong to it                                    |
+| A clear visual representation of the journey  | The journey strip on the home page: every month of listening as a bar, the chapters as bands, and the spans covered by the ledger and the card underneath                                 |
+| Responsive design                             | Verified at nine widths from 320 px to 2560 px on every page, with a bottom navigation on phones                                                                                          |
 
 Also included: a light theme (subtle blue base, green accents) and a dark theme (light lavender highlight), a day drawer with earlier and later day buttons, a keyboard-first interface, and honest handling of missing and duplicated data.
 
@@ -41,18 +41,18 @@ Also included: a light theme (subtle blue base, green accents) and a dark theme 
 
 ## Tech stack
 
-| Layer | Choice | Why |
-| --- | --- | --- |
-| UI | React 19 | Lazy routes with Suspense, `useDeferredValue`, `useSyncExternalStore`, concurrent rendering |
-| Language | TypeScript 6, strict | Every data shape is typed and validated at the edge |
-| Build | Vite 8 | Fast builds, module workers, code splitting |
-| Styling | Tailwind CSS 4 with CSS custom properties | Tokens for both themes; container queries, `color-mix()`, `dvh` units, view transitions |
-| Icons | Phosphor | Tree-shaken, one family |
-| Fonts | Inter Tight (variable) and JetBrains Mono, self-hosted | No third-party requests |
-| Tests | Vitest 5, Testing Library, jsdom | 42 tests, 96% line coverage |
-| Verification | Playwright, axe-core, Lighthouse | Every requirement is checked in a real browser |
-| Quality | ESLint 9 (flat config, jsx-a11y, react-hooks, sonarjs), Prettier, EditorConfig | Zero errors and zero warnings |
-| Hosting | Vercel | Static build with cache and security headers |
+| Layer        | Choice                                                                         | Why                                                                                         |
+| ------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| UI           | React 19                                                                       | Lazy routes with Suspense, `useDeferredValue`, `useSyncExternalStore`, concurrent rendering |
+| Language     | TypeScript 6, strict                                                           | Every data shape is typed and validated at the edge                                         |
+| Build        | Vite 8                                                                         | Fast builds, module workers, code splitting                                                 |
+| Styling      | Tailwind CSS 4 with CSS custom properties                                      | Tokens for both themes; container queries, `color-mix()`, `dvh` units, view transitions     |
+| Icons        | Phosphor                                                                       | Tree-shaken, one family                                                                     |
+| Fonts        | Inter Tight (variable) and JetBrains Mono, self-hosted                         | No third-party requests                                                                     |
+| Tests        | Vitest 5, Testing Library, jsdom                                               | 42 tests, 96% line coverage                                                                 |
+| Verification | Playwright, axe-core, Lighthouse                                               | Every requirement is checked in a real browser                                              |
+| Quality      | ESLint 9 (flat config, jsx-a11y, react-hooks, sonarjs), Prettier, EditorConfig | Zero errors and zero warnings                                                               |
+| Hosting      | Vercel                                                                         | Static build with cache and security headers                                                |
 
 The whole app is frontend only. There is no backend, no database and no network call other than fetching its own three JSON files.
 
@@ -106,22 +106,22 @@ See `ARCHITECTURE.md` for the data flow and the reasoning behind the insight met
 
 ## Components and hooks
 
-| Name | Kind | Purpose |
-| --- | --- | --- |
-| `DataProvider`, `useData`, `useReady` | context and hooks | Load the data once, expose it, offer a retry |
-| `DrawerProvider`, `useDrawer` | context and hook | Open the day drawer from anywhere |
-| `useHashRoute` | hook | Route and query from the URL hash, with view transitions |
-| `useTheme` | hook | Light or dark theme, saved and applied before first paint |
-| `useFocusHeading` | hook | Move focus to the new heading after a route or chapter change |
-| `AppHeader` | component | Top navigation on desktop, bottom navigation on phones |
-| `DayDrawer` | component | Native `<dialog>` showing everything recorded on one day |
-| `ReceiptRow` | component | One receipt as a printed line |
-| `InsightCard` | component | A finding, its number and the days behind it |
-| `JourneyStrip` | component | Monthly listening, chapters and source coverage in one SVG |
-| `ChapterView`, `ChapterBars` | components | One chapter of the story with its month-by-month chart |
-| `ArcDiagram`, `LinkDetail` | components | The connections between artists and kinds of spending |
-| `Heatmap`, `MonthlyJourney`, `ArtistStreams` | components | The rhythm charts, each with a text alternative |
-| `ExploreControls` | component | Search, kind chips, theme, years and order |
+| Name                                         | Kind              | Purpose                                                       |
+| -------------------------------------------- | ----------------- | ------------------------------------------------------------- |
+| `DataProvider`, `useData`, `useReady`        | context and hooks | Load the data once, expose it, offer a retry                  |
+| `DrawerProvider`, `useDrawer`                | context and hook  | Open the day drawer from anywhere                             |
+| `useHashRoute`                               | hook              | Route and query from the URL hash, with view transitions      |
+| `useTheme`                                   | hook              | Light or dark theme, saved and applied before first paint     |
+| `useFocusHeading`                            | hook              | Move focus to the new heading after a route or chapter change |
+| `AppHeader`                                  | component         | Top navigation on desktop, bottom navigation on phones        |
+| `DayDrawer`                                  | component         | Native `<dialog>` showing everything recorded on one day      |
+| `ReceiptRow`                                 | component         | One receipt as a printed line                                 |
+| `InsightCard`                                | component         | A finding, its number and the days behind it                  |
+| `JourneyStrip`                               | component         | Monthly listening, chapters and source coverage in one SVG    |
+| `ChapterView`, `ChapterBars`                 | components        | One chapter of the story with its month-by-month chart        |
+| `ArcDiagram`, `LinkDetail`                   | components        | The connections between artists and kinds of spending         |
+| `Heatmap`, `MonthlyJourney`, `ArtistStreams` | components        | The rhythm charts, each with a text alternative               |
+| `ExploreControls`                            | component         | Search, kind chips, theme, years and order                    |
 
 ## Data and method
 
@@ -172,19 +172,19 @@ A static build on Vercel: build command `npm run build`, output `dist`. `vercel.
 
 The project was built against a ledger of measurable gates (`GATES.md`). Each one has a script, and all of them run on the production build:
 
-| Gate | Script |
-| --- | --- |
-| Lint, strict types, formatting, build | `verify-tooling` |
-| Tests and coverage | `verify-tests` |
-| Data reconciled with the raw files | `verify-data`, `verify-insights` |
-| Search, connections, story, journey work in a real browser | `verify-features` |
-| axe and keyboard use, both themes | `verify-a11y` |
-| No overflow at nine widths | `verify-responsive` |
-| Palette follows the brief, contrast | `verify-theme` |
-| Motion limits | `verify-motion` |
-| Lighthouse, bundle size | `verify-efficiency` |
-| Security | `verify-security` |
-| Modern stack | `verify-stack` |
+| Gate                                                       | Script                           |
+| ---------------------------------------------------------- | -------------------------------- |
+| Lint, strict types, formatting, build                      | `verify-tooling`                 |
+| Tests and coverage                                         | `verify-tests`                   |
+| Data reconciled with the raw files                         | `verify-data`, `verify-insights` |
+| Search, connections, story, journey work in a real browser | `verify-features`                |
+| axe and keyboard use, both themes                          | `verify-a11y`                    |
+| No overflow at nine widths                                 | `verify-responsive`              |
+| Palette follows the brief, contrast                        | `verify-theme`                   |
+| Motion limits                                              | `verify-motion`                  |
+| Lighthouse, bundle size                                    | `verify-efficiency`              |
+| Security                                                   | `verify-security`                |
+| Modern stack                                               | `verify-stack`                   |
 
 ## Credits
 

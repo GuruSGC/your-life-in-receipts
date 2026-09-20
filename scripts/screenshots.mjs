@@ -20,7 +20,10 @@ try {
     const { page, context } = await openRoute(browser, server.url, shot.route, shot)
     const png = await page.screenshot({ type: 'png', fullPage: false })
     const path = `docs/${shot.file}.webp`
-    await sharp(png).resize({ width: shot.width > 600 ? 1000 : 390 }).webp({ quality: 72 }).toFile(path)
+    await sharp(png)
+      .resize({ width: shot.width > 600 ? 1000 : 390 })
+      .webp({ quality: 72 })
+      .toFile(path)
     console.log(`${path} ${(statSync(path).size / 1024).toFixed(0)} KB`)
     await context.close()
   }
