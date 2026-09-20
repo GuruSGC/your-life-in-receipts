@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 import {
   DEFAULT_FILTERS,
   filterReceipts,

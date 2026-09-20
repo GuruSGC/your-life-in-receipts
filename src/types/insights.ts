@@ -75,3 +75,14 @@ export interface Link {
   conditionalRate: number
   sampleDays: number[]
 }
+
+export interface StoryWithFacts {
+  months: MonthRow[]
+  facts: Map<number, DayFacts>
+  chapters: Chapter[]
+  insights: Insight[]
+  links: Link[]
+}
+
+/** What the interface needs. The per-day working set stays behind in the worker. */
+export type Story = Omit<StoryWithFacts, 'facts'>

@@ -1,5 +1,5 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
-import type { RouteId } from '@/hooks/useHashRoute'
+import type { RouteId } from '@/constants'
 
 /** Every page is its own chunk, fetched the first time it is visited. */
 export const PAGES: Record<RouteId, LazyExoticComponent<ComponentType>> = {

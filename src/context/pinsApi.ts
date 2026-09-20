@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 
 export interface PinsApi {
   pinned: ReadonlySet<string>

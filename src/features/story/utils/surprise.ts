@@ -1,4 +1,4 @@
-import type { LifeData } from '@/features/data'
+import type { LifeData } from '@/types'
 
 const MIN_SOURCES = 2
 

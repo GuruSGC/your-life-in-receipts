@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react'
-import type { MusicAggregates } from '@/features/data'
+import type { MusicAggregates } from '@/types'
 import { formatNumber } from '@/utils/format'
 
 const WIDTH = 1000

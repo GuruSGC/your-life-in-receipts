@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
-import { buildStory, forInterface } from '@/features/insights'
-import { loadLifeData } from '../services/dataService'
-import { withoutReceipts } from '../services/decode'
+import { buildStory, forInterface } from '@/services/insights'
+import { loadLifeData } from './dataService'
+import { withoutReceipts } from './decode'
 
 const CHUNK = 1500
 

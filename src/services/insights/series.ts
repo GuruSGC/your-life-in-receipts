@@ -1,6 +1,6 @@
-import type { LifeData, Receipt } from '@/features/data'
+import type { LifeData, Receipt } from '@/types'
 import { dayOf, monthKey, monthsBetween, monthStartMin } from '@/utils/time'
-import type { DayFacts, MonthRow } from './types'
+import type { DayFacts, MonthRow } from '@/types'
 
 const emptyMonth = (key: string): MonthRow => ({
   key,

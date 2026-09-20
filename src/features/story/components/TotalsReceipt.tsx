@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { LifeData } from '@/features/data'
+import type { LifeData } from '@/types'
 import { formatDuration, formatNumber } from '@/utils/format'
 import { dayOf, formatDay } from '@/utils/time'
 

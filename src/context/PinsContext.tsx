@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 import { readPins, writePins } from '@/services/pins'
 import { PinsContext } from './pinsApi'
 

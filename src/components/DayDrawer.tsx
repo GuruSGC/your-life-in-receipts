@@ -1,12 +1,12 @@
 import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
-import type { LifeData, Receipt } from '@/features/data'
+import type { LifeData, Receipt } from '@/types'
 import { useReady } from '@/context/dataApi'
 import { useDrawer, type DrawerTarget } from '@/context/drawerApi'
 import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees, plural } from '@/utils/format'
 import { formatDay, formatWeekday } from '@/utils/time'
-import { MomentChain } from '@/features/story/components/MomentChain'
+import { MomentChain } from '@/components/MomentChain'
 import { ReceiptRow } from './ReceiptRow'
 
 const SEARCH_LIMIT_DAYS = 400

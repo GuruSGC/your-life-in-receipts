@@ -6,7 +6,7 @@ import {
   ShareNetwork,
   type Icon,
 } from '@phosphor-icons/react'
-import { ROUTES, type RouteId } from '@/hooks/useHashRoute'
+import { ROUTES, type RouteId } from '@/constants'
 import { ThemeToggle } from './ThemeToggle'
 
 const ICONS: Partial<Record<RouteId, Icon>> = {

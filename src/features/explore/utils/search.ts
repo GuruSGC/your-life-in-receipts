@@ -1,4 +1,4 @@
-import type { Receipt, ReceiptKind } from '@/features/data'
+import type { Receipt, ReceiptKind } from '@/types'
 import type { Theme } from '@/constants'
 import { yearOf } from '@/utils/time'
 

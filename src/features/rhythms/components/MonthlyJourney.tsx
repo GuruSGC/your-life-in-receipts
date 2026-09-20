@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Chapter, MonthRow } from '@/features/insights'
+import type { Chapter, MonthRow } from '@/types'
 import { formatDuration, formatNumber, formatPercent, formatRupees } from '@/utils/format'
 import { formatMonth } from '@/utils/time'
 

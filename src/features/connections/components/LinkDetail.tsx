@@ -1,4 +1,4 @@
-import type { Link } from '@/features/insights'
+import type { Link } from '@/types'
 import { THEME_LABELS } from '@/constants'
 import { useDrawer } from '@/context/drawerApi'
 import { formatNumber, formatPercent } from '@/utils/format'

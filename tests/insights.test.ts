@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/features/data'
-import { buildStory } from '@/features/insights'
-import { segmentMonths, pickPersona } from '@/features/insights/chapters'
-import { pearson, quantile, median } from '@/features/insights/stats'
+import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/services/data'
+import { buildStory } from '@/services/insights'
+import { pickPersona } from '@/services/insights/persona'
+import { segmentMonths } from '@/services/insights/segments'
+import { pearson, quantile, median } from '@/services/insights/stats'
 import { monthsBetween, nextMonthKey, weekdayOf, dayOf } from '@/utils/time'
 
 const read = (name: string): unknown => JSON.parse(readFileSync(`public/data/${name}.json`, 'utf8'))

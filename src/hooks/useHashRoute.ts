@@ -1,17 +1,6 @@
 import { useCallback, useSyncExternalStore } from 'react'
 import { flushSync } from 'react-dom'
-
-/** The pages of the app, their paths and labels. */
-export const ROUTES = [
-  { id: 'receipt', path: '/', label: 'Receipt' },
-  { id: 'story', path: '/story', label: 'Story' },
-  { id: 'connections', path: '/connections', label: 'Connections' },
-  { id: 'rhythms', path: '/rhythms', label: 'Rhythms' },
-  { id: 'explore', path: '/explore', label: 'Explore' },
-  { id: 'method', path: '/method', label: 'Method' },
-] as const
-
-export type RouteId = (typeof ROUTES)[number]['id']
+import { ROUTES, type RouteId } from '@/constants'
 
 export interface ParsedHash {
   route: RouteId

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/features/data'
-import { loadLifeData } from '@/features/data/services/dataService'
+import { assemble, decodeCard, decodeLedger, decodeMusic } from '@/services/data'
+import { loadLifeData } from '@/services/data/dataService'
 
 const read = (name: string): unknown => JSON.parse(readFileSync(`public/data/${name}.json`, 'utf8'))
 

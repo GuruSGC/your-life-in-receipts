@@ -5,7 +5,7 @@ import {
   Receipt as ReceiptIcon,
   type Icon,
 } from '@phosphor-icons/react'
-import type { Receipt, ReceiptKind } from '@/features/data'
+import type { Receipt, ReceiptKind } from '@/types'
 import { formatDuration, formatRupees } from '@/utils/format'
 import { chainOf } from '../utils/moment'
 

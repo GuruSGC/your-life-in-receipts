@@ -20,8 +20,8 @@ export default defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'src/main.tsx',
-        'src/**/worker/**',
-        'src/features/data/services/loadStory.ts',
+        'src/**/storyWorker.ts',
+        'src/services/data/loadStory.ts',
         'src/**/*.test.{ts,tsx}',
         'src/test/**',
         'src/**/index.ts',

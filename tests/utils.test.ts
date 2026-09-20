@@ -27,7 +27,7 @@ import {
   need,
   recordOf,
   rowsOf,
-} from '@/features/data/utils/guards'
+} from '@/services/data/guards'
 
 describe('hash routes', () => {
   it('parses the route and its query, falling back to the home page', () => {

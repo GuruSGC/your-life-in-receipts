@@ -101,3 +101,15 @@ export const CARD_THEME: Record<string, Theme> = {
   entertainment: 'entertainment',
   fitness_and_medical: 'health',
 }
+
+/** The pages of the app, their paths and labels. */
+export const ROUTES = [
+  { id: 'receipt', path: '/', label: 'Receipt' },
+  { id: 'story', path: '/story', label: 'Story' },
+  { id: 'connections', path: '/connections', label: 'Connections' },
+  { id: 'rhythms', path: '/rhythms', label: 'Rhythms' },
+  { id: 'explore', path: '/explore', label: 'Explore' },
+  { id: 'method', path: '/method', label: 'Method' },
+] as const
+
+export type RouteId = (typeof ROUTES)[number]['id']

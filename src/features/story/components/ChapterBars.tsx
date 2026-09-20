@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { Chapter, MonthRow } from '@/features/insights'
+import type { Chapter, MonthRow } from '@/types'
 import { formatDuration, formatRupees } from '@/utils/format'
 import { formatMonth } from '@/utils/time'
 

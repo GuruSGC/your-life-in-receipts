@@ -1,114 +1,22 @@
-import type { LifeData } from '@/features/data'
+import type { LifeData } from '@/types'
 import { THEME_LABELS, type Theme } from '@/constants'
 import { formatNumber, formatPercent } from '@/utils/format'
-import { dayOf, formatMonth, monthKey, monthStartMin, nextMonthKey } from '@/utils/time'
-import { median, sse } from './stats'
-import type { Chapter, DayFacts, MonthRow, Source } from './types'
+import { dayOf, formatMonth, monthStartMin, nextMonthKey } from '@/utils/time'
+import { median } from './stats'
+import { pickPersona, type Traits } from './persona'
+import { segmentMonths, sourceCuts } from './segments'
+import type { Chapter, DayFacts, MonthRow, Source } from '@/types'
 
-const MIN_MONTHS = 6
-const TARGET_CHAPTERS = 7
 const NEXT_MONTH_OFFSET_MIN = 45_000
 
-interface Segment {
-  from: number
-  to: number
-}
-
-interface Split {
-  index: number
-  at: number
-  gain: number
-}
-
-/** Forced cut points where a data source starts or stops, as month indexes into the series. */
-function sourceCuts(life: LifeData, months: MonthRow[]): number[] {
-  const indexOf = (min: number): number => months.findIndex((row) => row.key === monthKey(min))
-  const cuts = new Set<number>()
-  for (const { startMin, endMin } of [life.coverage.ledger, life.coverage.card]) {
-    const start = indexOf(startMin)
-    const end = indexOf(endMin) + 1
-    if (start > 0) cuts.add(start)
-    if (end > 0 && end < months.length) cuts.add(end)
-  }
-  return [...cuts].sort((a, b) => a - b)
-}
-
-function bestSplit(levels: number[], segment: Segment): { at: number; gain: number } | null {
-  if (segment.to - segment.from < MIN_MONTHS * 2) return null
-  const whole = sse(levels, segment.from, segment.to)
-  let best: { at: number; gain: number } | null = null
-  for (let at = segment.from + MIN_MONTHS; at <= segment.to - MIN_MONTHS; at += 1) {
-    const gain = whole - sse(levels, segment.from, at) - sse(levels, at, segment.to)
-    if (!best || gain > best.gain) best = { at, gain }
-  }
-  return best
-}
-
-/** Binary segmentation of log listening minutes, starting from the forced source boundaries. */
-export function segmentMonths(
-  levels: number[],
-  forcedCuts: number[],
-  target = TARGET_CHAPTERS,
-): Segment[] {
-  const edges = [0, ...forcedCuts, levels.length]
-  let segments: Segment[] = []
-  for (let i = 0; i < edges.length - 1; i += 1)
-    segments.push({ from: edges[i] ?? 0, to: edges[i + 1] ?? levels.length })
-  while (segments.length < target) {
-    let pick: Split | null = null
-    segments.forEach((segment, index) => {
-      const split = bestSplit(levels, segment)
-      if (split && (!pick || split.gain > pick.gain)) pick = { index, ...split }
-    })
-    const chosen = pick as Split | null
-    const victim = chosen ? segments[chosen.index] : undefined
-    if (!chosen || !victim) break
-    segments = [
-      ...segments.slice(0, chosen.index),
-      { from: victim.from, to: chosen.at },
-      { from: chosen.at, to: victim.to },
-      ...segments.slice(chosen.index + 1),
-    ]
-  }
-  return segments
-}
-
-interface Traits {
-  level: number
-  nightShare: number
-  skipRate: number
-  leadShare: number
-  avgSession: number
-  newLeadRate: number
-}
+export { pickPersona } from './persona'
+export { segmentMonths } from './segments'
 
 interface Measured extends Traits {
   lead: string
   plays: number
   sessions: number
   minutes: number
-}
-
-const relative = (value: number, base: number): number => (base ? value / base - 1 : 0)
-
-/**
- * Names a chapter after the trait that sets it furthest apart from the whole timeline.
- * `avoid` keeps neighbouring chapters from sharing a name.
- */
-export function pickPersona(t: Traits, base: Traits, lead: string, avoid = ''): string {
-  const candidates: [string, number][] = [
-    ['The Quiet Stretch', (0.5 - t.level) / 0.2],
-    ['The Explorer', relative(t.newLeadRate, base.newLeadRate) / 0.5],
-    [`The ${lead.replace(/^The /, '')} Loyalist`, (t.leadShare - base.leadShare) / 0.05],
-    ['The Night Shift', (t.nightShare - base.nightShare) / 0.04],
-    ['The Soundtrack Years', (t.level - 1) / 0.5],
-    ['The Restless Thumb', relative(t.skipRate, base.skipRate) / 0.5],
-    ['The Long Listen', relative(t.avgSession, base.avgSession) / 0.3],
-  ]
-  const ranked = candidates
-    .filter(([name, score]) => score >= 0.5 && name !== avoid)
-    .sort((a, b) => b[1] - a[1])
-  return ranked[0]?.[0] ?? 'The Steady Rhythm'
 }
 
 const within = (min: number | null, first: number, last: number): boolean =>

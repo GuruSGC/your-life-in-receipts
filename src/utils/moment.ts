@@ -1,4 +1,4 @@
-import type { Receipt, ReceiptKind } from '@/features/data'
+import type { Receipt, ReceiptKind } from '@/types'
 
 export interface Step {
   kind: ReceiptKind

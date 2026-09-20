@@ -1,5 +1,5 @@
 import { DATA_BASE_PATH } from '@/constants'
-import type { LifeData } from '../types'
+import type { LifeData } from '@/types'
 import { assemble, decodeCard, decodeLedger, decodeMusic } from './decode'
 
 type Fetcher = (input: string) => Promise<Pick<Response, 'ok' | 'status' | 'json'>>

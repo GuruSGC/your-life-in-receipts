@@ -1,6 +1,6 @@
 import { useCallback, useDeferredValue, useEffect, useMemo, useState } from 'react'
 import { filtersFromParams, paramsFromFilters } from '@/features/explore/utils/urlState'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 import { ExploreControls } from '@/features/explore/components/ExploreControls'
 import {
   DEFAULT_FILTERS,
@@ -15,7 +15,7 @@ import { useDrawer } from '@/context/drawerApi'
 import { usePins } from '@/context/pinsApi'
 import { formatDuration, formatNumber, formatRupees } from '@/utils/format'
 import { dayOf, yearOf } from '@/utils/time'
-import type { LifeData } from '@/features/data'
+import type { LifeData } from '@/types'
 
 const PAGE_SIZE = 60
 

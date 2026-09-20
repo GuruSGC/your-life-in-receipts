@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
-import type { LifeData } from '@/features/data'
-import type { Story } from '@/features/insights'
+import type { LifeData } from '@/types'
+import type { Story } from '@/types'
 
 export type State =
   | { status: 'loading' }

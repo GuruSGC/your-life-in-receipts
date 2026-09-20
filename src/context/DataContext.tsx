@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { withReceipts } from '@/features/data/services/decode'
-import { loadStory } from '@/features/data/services/loadStory'
-import type { Receipt } from '@/features/data'
+import { withReceipts } from '@/services/data/decode'
+import { loadStory } from '@/services/data'
+import type { Receipt } from '@/types'
 import { DataContext, type State } from './dataApi'
 
 /** Loads the receipts once, builds the story, and shares both with the whole app. */

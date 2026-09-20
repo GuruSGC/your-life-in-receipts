@@ -1,5 +1,5 @@
-import type { Story } from '@/features/insights'
-import type { LifeData, Receipt } from '../types'
+import type { Story } from '@/types'
+import type { LifeData, Receipt } from '@/types'
 import { withoutReceipts } from './decode'
 
 export interface Loaded {
@@ -16,8 +16,8 @@ type WorkerReply =
 /** The same work on the main thread, for browsers without module workers and for tests. */
 async function loadDirect(): Promise<Loaded> {
   const [data, insights] = await Promise.all([
-    import('@/features/data'),
-    import('@/features/insights'),
+    import('@/services/data'),
+    import('@/services/insights'),
   ])
   const life = await data.loadLifeData()
   return { life, story: insights.forInterface(insights.buildStory(life)) }

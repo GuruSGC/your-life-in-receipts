@@ -1,9 +1,9 @@
-import type { LifeData, Receipt } from '@/features/data'
+import type { LifeData, Receipt } from '@/types'
 import { THEME_LABELS, type Theme } from '@/constants'
 import { formatNumber, formatPercent, formatRupees } from '@/utils/format'
 import { dayOf, formatDay, hourOf } from '@/utils/time'
 import { pearson, sum } from './stats'
-import type { DayFacts, Insight, Link, MonthRow } from './types'
+import type { DayFacts, Insight, Link, MonthRow } from '@/types'
 
 const ledgerOut = (life: LifeData): Receipt[] =>
   life.receipts.filter((receipt) => receipt.kind === 'ledger' && receipt.direction === 'out')

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { LifeData, Receipt } from '@/features/data'
+import type { LifeData, Receipt } from '@/types'
 import { pickSurpriseDay } from '@/features/story/utils/surprise'
 
 const receipt = (id: string, kind: Receipt['kind']): Receipt => ({

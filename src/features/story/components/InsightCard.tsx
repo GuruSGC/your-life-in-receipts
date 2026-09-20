@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { Insight } from '@/features/insights'
+import type { Insight } from '@/types'
 import { useDrawer } from '@/context/drawerApi'
 import { formatDay } from '@/utils/time'
 

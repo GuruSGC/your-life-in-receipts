@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 import { DrawerContext, type DrawerTarget } from './drawerApi'
 
 /** Holds which day or receipt the drawer is showing and how to open and close it. */

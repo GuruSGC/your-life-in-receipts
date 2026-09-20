@@ -1,4 +1,4 @@
-import type { LifeData } from '@/features/data'
+import type { Insight, LifeData, Story, StoryWithFacts } from '@/types'
 import { buildChapters } from './chapters'
 import {
   comfortLoop,
@@ -17,18 +17,6 @@ import {
   strongestLink,
 } from './money'
 import { dayFacts, monthlySeries } from './series'
-import type { Chapter, DayFacts, Insight, Link, MonthRow } from './types'
-
-export interface StoryWithFacts {
-  months: MonthRow[]
-  facts: Map<number, DayFacts>
-  chapters: Chapter[]
-  insights: Insight[]
-  links: Link[]
-}
-
-/** What the interface needs. The per-day working set stays behind in the worker. */
-export type Story = Omit<StoryWithFacts, 'facts'>
 
 /** Drops the per-day working set before the story is sent to the interface. */
 export function forInterface(full: StoryWithFacts): Story {
@@ -61,5 +49,3 @@ export function buildStory(life: LifeData): StoryWithFacts {
   ].filter((insight): insight is Insight => insight !== null)
   return { months, facts, chapters, insights, links }
 }
-
-export type { Chapter, DayFacts, Insight, Link, MonthRow } from './types'

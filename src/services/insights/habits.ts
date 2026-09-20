@@ -1,8 +1,8 @@
-import type { LifeData, Receipt } from '@/features/data'
+import type { LifeData, Receipt } from '@/types'
 import { formatNumber, formatPercent } from '@/utils/format'
 import { dayOf, formatHour, formatDay, yearOf } from '@/utils/time'
 import { sum } from './stats'
-import type { DayFacts, Insight, MonthRow } from './types'
+import type { DayFacts, Insight, MonthRow } from '@/types'
 
 const topDays = (
   facts: Map<number, DayFacts>,

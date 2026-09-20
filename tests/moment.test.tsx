@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import type { Receipt } from '@/features/data'
-import { MomentChain } from '@/features/story/components/MomentChain'
-import { chainOf } from '@/features/story/utils/moment'
+import type { Receipt } from '@/types'
+import { MomentChain } from '@/components/MomentChain'
+import { chainOf } from '@/utils/moment'
 
 const make = (
   id: string,

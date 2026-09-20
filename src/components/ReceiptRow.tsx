@@ -1,6 +1,6 @@
 import { PushPin } from '@phosphor-icons/react'
 import { memo, type CSSProperties } from 'react'
-import type { Receipt } from '@/features/data'
+import type { Receipt } from '@/types'
 import { formatRupees } from '@/utils/format'
 import { dayOf, formatDay, formatTime } from '@/utils/time'
 
