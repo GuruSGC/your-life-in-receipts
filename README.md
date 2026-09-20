@@ -2,9 +2,18 @@
 
 An interactive data story built from three unrelated exports: a listening history of 148,350 plays, a household ledger of 2,461 entries and a card statement of 1,300 receipts. The app finds chapters, habits and hidden connections in them and lets you follow each finding back to the days it came from.
 
+[![CI](https://github.com/GuruSGC/your-life-in-receipts/actions/workflows/ci.yml/badge.svg)](https://github.com/GuruSGC/your-life-in-receipts/actions)
+![React 19](https://img.shields.io/badge/React-19-149eca) ![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-3178c6) ![Vite 8](https://img.shields.io/badge/Vite-8-646cff) ![License MIT](https://img.shields.io/badge/license-MIT-green)
+
 Live demo: https://your-life-in-receipts-sand.vercel.app
 
 ![The home page in the light theme](docs/home-light.webp)
+
+## Contents
+
+[Overview](#overview) · [Features](#features) · [Screenshots](#screenshots) · [Tech stack](#tech-stack) · [Getting started](#getting-started) · [Architecture](#architecture) · [Components and hooks](#components-and-hooks) · [Data and method](#data-and-method) · [Testing](#testing) · [Accessibility](#accessibility) · [Performance](#performance) · [Security](#security) · [Deployment](#deployment) · [Verification](#verification) · [Credits](#credits)
+
+More detail lives in [ARCHITECTURE.md](ARCHITECTURE.md), [docs/DATA.md](docs/DATA.md), [docs/COMPONENTS.md](docs/COMPONENTS.md), [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## Overview
 
