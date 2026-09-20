@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { memo, type CSSProperties } from 'react'
 import type { Receipt } from '@/features/data'
 import { formatRupees } from '@/shared/utils/format'
 import { dayOf, formatDay, formatTime } from '@/shared/utils/time'
@@ -33,7 +33,7 @@ function footnote(receipt: Receipt, showDate: boolean): string {
 }
 
 /** One receipt as a printed line: what it was, when, and the amount when there is one. */
-export function ReceiptRow({ receipt, index = 0, onOpen, showDate = false }: Props) {
+function ReceiptRowBase({ receipt, index = 0, onOpen, showDate = false }: Props) {
   const body = (
     <>
       <span
@@ -73,3 +73,6 @@ export function ReceiptRow({ receipt, index = 0, onOpen, showDate = false }: Pro
     </li>
   )
 }
+
+/** A row is rebuilt only when its own receipt changes, which keeps long search results cheap to re-render. */
+export const ReceiptRow = memo(ReceiptRowBase)
