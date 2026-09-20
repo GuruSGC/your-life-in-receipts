@@ -31,6 +31,7 @@ const LIMITS = [
   'A connection is a co-occurrence, not a cause. Busy days have more of everything, so each rate is compared with all days.',
   'Amounts are read as rupees. Money that moved through savings, investments and transfers is kept out of "everyday spending".',
   'The card statement has coordinates that do not match its cities, so no map is drawn.',
+  "An artist counts as played on a day when they led one of that day's listening sessions; sessions keep their three most played artists.",
 ]
 
 export default function MethodPage() {

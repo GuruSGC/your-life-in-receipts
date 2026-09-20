@@ -40,7 +40,7 @@ export default function RhythmsPage() {
               Listening against spending, month by month
             </h2>
             <p className="mb-3 mt-1 max-w-3xl text-ink-2">
-              The green area is time spent listening (square-root scale, so quiet months stay
+              The filled area is time spent listening (square-root scale, so quiet months stay
               visible). The orange line is everyday spending, drawn only where a ledger exists. The
               bands are the chapters.
             </p>
