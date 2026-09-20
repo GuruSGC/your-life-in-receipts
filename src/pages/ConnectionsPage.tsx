@@ -27,7 +27,6 @@ function Explorer({ links }: { links: Link[] }) {
             type="button"
             className="chip"
             aria-pressed={windowId === item.id}
-            disabled={!links.some((link) => link.window === item.id)}
             onClick={() => {
               setWindowId(item.id)
               setPicked(null)
@@ -39,8 +38,9 @@ function Explorer({ links }: { links: Link[] }) {
       </div>
       {visible.length === 0 ? (
         <p className="paper max-w-xl p-5 text-ink-2">
-          No overlap in this period was strong enough to report. A link needs at least 8 shared days
-          and a rate at least a quarter away from normal.
+          In these years no artist was played noticeably more or less often on days with card
+          spending. That is a finding too: the card receipts do not follow the music. A link needs
+          at least 8 shared days and a rate at least a quarter away from normal.
         </p>
       ) : (
         <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:gap-8">

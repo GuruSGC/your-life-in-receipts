@@ -97,27 +97,29 @@ export function Heatmap({ hours }: { hours: number[] }) {
           Dashed frame: 22:00 to 04:00
         </text>
       </svg>
-      <table className="sr-only">
-        <caption>Plays by hour of day, all weekdays together</caption>
-        <thead>
-          <tr>
-            <th scope="col">Hour</th>
-            <th scope="col">Plays</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: 24 }, (_, hour) => (
-            <tr key={hour}>
-              <th scope="row">{formatHour(hour)}</th>
-              <td>
-                {formatNumber(
-                  hours.filter((_, index) => index % 24 === hour).reduce((a, b) => a + b, 0),
-                )}
-              </td>
+      <div className="sr-only">
+        <table>
+          <caption>Plays by hour of day, all weekdays together</caption>
+          <thead>
+            <tr>
+              <th scope="col">Hour</th>
+              <th scope="col">Plays</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {Array.from({ length: 24 }, (_, hour) => (
+              <tr key={hour}>
+                <th scope="row">{formatHour(hour)}</th>
+                <td>
+                  {formatNumber(
+                    hours.filter((_, index) => index % 24 === hour).reduce((a, b) => a + b, 0),
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <figcaption className="mono mt-1 text-xs text-ink-2">
         Night hours ({NIGHT_HOURS.map((hour) => String(hour).padStart(2, '0')).join(', ')}) are
         framed. Times as recorded.

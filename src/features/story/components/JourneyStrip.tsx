@@ -3,9 +3,11 @@ import type { Chapter, MonthRow } from '@/features/insights'
 import { formatMonth } from '@/shared/utils/time'
 
 const WIDTH = 1000
-const HEIGHT = 190
+const HEIGHT = 250
 const TOP = 34
 const BASE = 150
+const LANE_LABELS = { ledger: 'household ledger', card: 'card statement' } as const
+const LANE_COLOURS = { ledger: 'var(--c-food)', card: 'var(--c-travel)' } as const
 
 interface Props {
   months: MonthRow[]
@@ -14,7 +16,53 @@ interface Props {
   active?: number
 }
 
-/** Monthly listening as bars, chapter bands behind them, and the spans covered by the ledger and the card. */
+function Lane({
+  source,
+  months,
+  step,
+  lane,
+}: {
+  source: 'ledger' | 'card'
+  months: MonthRow[]
+  step: number
+  lane: number
+}) {
+  const present = months.filter(
+    (row) => (source === 'ledger' ? row.ledgerCount : row.cardCount) > 0,
+  )
+  const first = present[0]
+  const last = present.at(-1)
+  if (!first || !last) return null
+  const x1 = months.indexOf(first) * step
+  const x2 = (months.indexOf(last) + 1) * step
+  const y = BASE + 44 + lane * 22
+  const labelOnRight = x2 < WIDTH - 170
+  return (
+    <g aria-hidden="true">
+      <line
+        x1={x1}
+        x2={x2}
+        y1={y}
+        y2={y}
+        stroke={LANE_COLOURS[source]}
+        strokeWidth={6}
+        strokeLinecap="round"
+      />
+      <text
+        x={labelOnRight ? x2 + 10 : x1 - 10}
+        y={y + 4}
+        textAnchor={labelOnRight ? 'start' : 'end'}
+        fontSize="12"
+        fill="var(--ink-2)"
+        className="mono"
+      >
+        {LANE_LABELS[source]}
+      </text>
+    </g>
+  )
+}
+
+/** Monthly listening as bars, chapter bands behind them, a year axis, and the spans covered by the ledger and the card. */
 export function JourneyStrip({ months, chapters, active }: Props) {
   const step = WIDTH / months.length
   const max = Math.max(...months.map((row) => row.minutes), 1)
@@ -79,47 +127,30 @@ export function JourneyStrip({ months, chapters, active }: Props) {
         )
       })}
       <line x1={0} x2={WIDTH} y1={BASE} y2={BASE} stroke="var(--line-strong)" />
-      {(['ledger', 'card'] as const).map((source, lane) => {
-        const present = months.filter(
-          (row) => (source === 'ledger' ? row.ledgerCount : row.cardCount) > 0,
-        )
-        const first = present[0]
-        const last = present.at(-1)
-        if (!first || !last) return null
-        const x1 = (indexOfKey.get(first.key) ?? 0) * step
-        const x2 = ((indexOfKey.get(last.key) ?? 0) + 1) * step
-        const y = BASE + 16 + lane * 16
-        return (
-          <g key={source} aria-hidden="true">
+      {months
+        .filter((row, index) => row.key.endsWith('-01') && index % 1 === 0)
+        .map((row) => (
+          <g key={row.key} aria-hidden="true">
             <line
-              x1={x1}
-              x2={x2}
-              y1={y}
-              y2={y}
-              stroke={source === 'ledger' ? 'var(--c-food)' : 'var(--c-travel)'}
-              strokeWidth={5}
-              strokeLinecap="round"
+              x1={(indexOfKey.get(row.key) ?? 0) * step}
+              x2={(indexOfKey.get(row.key) ?? 0) * step}
+              y1={BASE}
+              y2={BASE + 6}
+              stroke="var(--line-strong)"
             />
-            <text x={x1} y={y + 14} fontSize="11" fill="var(--ink-2)" className="mono">
-              {source === 'ledger' ? 'household ledger' : 'card statement'}
+            <text
+              x={(indexOfKey.get(row.key) ?? 0) * step + 3}
+              y={BASE + 20}
+              fontSize="12"
+              fill="var(--ink-3)"
+              className="mono"
+            >
+              {row.key.slice(2, 4)}
             </text>
           </g>
-        )
-      })}
-      {[months[0], months[Math.floor(months.length / 2)], months.at(-1)].map((row) =>
-        row ? (
-          <text
-            key={row.key}
-            x={Math.min(Math.max((indexOfKey.get(row.key) ?? 0) * step, 4), WIDTH - 60)}
-            y={HEIGHT - 2}
-            fontSize="12"
-            fill="var(--ink-3)"
-            className="mono"
-          >
-            {row.key.slice(0, 4)}
-          </text>
-        ) : null,
-      )}
+        ))}
+      <Lane source="ledger" months={months} step={step} lane={0} />
+      <Lane source="card" months={months} step={step} lane={1} />
     </svg>
   )
 }
